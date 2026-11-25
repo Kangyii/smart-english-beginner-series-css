@@ -1038,7 +1038,7 @@ var d = new DOMParser().parseFromString(h, "text/html");
 var bad = d.querySelector(".alert-danger, .alert-error, .has-error .help-block");
 if (bad && bad.textContent.trim()) { pErr(bad.textContent.trim()); throw new Error("refus"); }
 pOk = true; pIn.readOnly = true; pIn.classList.add("se-w-saved"); activerCta(); try { localStorage.setItem(W.seenKey, "1"); } catch (e) {} try { var frMdp = document.createElement("iframe"); frMdp.style.display = "none"; frMdp.src = "/formation/formation/84378/?idmodule=897263&idpage=5069077"; document.body.appendChild(frMdp); } catch (e) {}
-pMsg.className = "se-w-pwd-msg ok"; pMsg.innerHTML = "&#10003; Mot de passe enregistr&eacute;, tu peux commencer&nbsp;! <span style=\"color:#8a7a6a;font-weight:400\">(clique dans le champ pour le changer)</span>";
+setTimeout(fermer, 900); pMsg.className = "se-w-pwd-msg ok"; pMsg.innerHTML = "&#10003; Mot de passe enregistr&eacute;, tu peux commencer&nbsp;! <span style=\"color:#8a7a6a;font-weight:400\">(clique dans le champ pour le changer)</span>";
 })
 .catch(function (e) {
 if (e && e.message === "refus") throw e;
@@ -1067,13 +1067,13 @@ e.preventDefault(); e.stopImmediatePropagation();
 var lien = this.getAttribute("href");
 validerMdp().then(function () {
 setTimeout(function () {
-if (/[?&]idpage=5012058/.test(window.location.search)) fermer(); else window.location.href = lien;
+
 }, 900);
 }).catch(function () {});
 });
 
 o.querySelector(".se-w-btn").addEventListener("click", function (e) {
-if (/[?&]idpage=5012058/.test(window.location.search)) { e.preventDefault(); fermer(); }
+e.preventDefault(); fermer();
 });
 }
 
