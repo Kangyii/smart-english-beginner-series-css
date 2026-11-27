@@ -1212,3 +1212,32 @@ if (document.readyState === "loading") document.addEventListener("DOMContentLoad
 window.addEventListener("load", poser);
 })();
 (function(){var st=document.createElement("style");st.textContent='a[href*="idpage=5069077"],a[href*="idpage=5069078"]{display:none!important}';(document.head||document.documentElement).appendChild(st);function h(){document.querySelectorAll('a[href*="idpage=5069077"],a[href*="idpage=5069078"]').forEach(function(a){var li=a.closest("li");(li||a).style.setProperty("display","none","important");});}h();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",h);setTimeout(h,800);})();
+
+/* ===================================================================
+HERO ACCUEIL : « Ton aventure commence ici » + prénom du membre
+=================================================================== */
+(function () {
+if (!/\/formation\/home\//.test(window.location.pathname) && !document.body.classList.contains("home")) return;
+var prenom = null, essais = 0;
+function poser() {
+if (!prenom) return false;
+var sp = document.querySelector(".sen-tt > span");
+if (!sp || !/^\s*Ton aventure commence ici/i.test(sp.textContent)) return false;
+if (sp.getAttribute("data-se-prenom")) return true;
+sp.setAttribute("data-se-prenom", "1");
+sp.textContent = "Ton aventure commence ici " + prenom;
+return true;
+}
+function boucle() { if (poser() || ++essais > 40) return; setTimeout(boucle, 250); }
+fetch("/formation/profil/", { credentials: "include" })
+.then(function (r) { return r.text(); })
+.then(function (h) {
+var i = new DOMParser().parseFromString(h, "text/html").querySelector('input[name="fname"]');
+var p = i && i.value ? i.value.trim().split(/\s+/)[0] : "";
+if (!p) return;
+prenom = p.charAt(0).toUpperCase() + p.slice(1);
+boucle();
+})
+.catch(function () {});
+})();
+/*                FIN HERO ACCUEIL PRÉNOM                */
