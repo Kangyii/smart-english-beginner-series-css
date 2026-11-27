@@ -936,92 +936,68 @@ lancer(s);
 /* =================== FIN FREEMIUM =================== */
 
 /* ===================================================================
-ÉCRAN DE BIENVENUE — première connexion (Freemium uniquement)
-S'affiche une seule fois par navigateur. Test : ajouter ?se_welcome=1 à l'URL.
+MOT DE PASSE SOUS L'ÉPISODE 1 (remplace la fenêtre de bienvenue)
+Bloc affiché sous la vidéo de l'épisode 1 tant que le membre n'a pas créé
+son mot de passe (= pas encore dans le groupe « Mot de passe créé », qui
+donne accès à la page 5069078). Test : ajouter ?se_pwd=1 à l'URL.
 =================================================================== */
 (function () {
-var W = {
-seenKey: "se_welcome_pwd_ok_v2",
-image: "https://da32ev14kd4yl.cloudfront.net/versioned/smart-english/Site/S%C3%A9quence%2001_00_07_04_05_Still001.jpg",
-episode1: "/formation/formation/84378/?idmodule=897263&idpage=5012058"
-};
-var force = /[?&]se_welcome=1/.test(window.location.search);
-try { if (!force && (localStorage.getItem(W.seenKey) || sessionStorage.getItem("se_w_s"))) return; } catch (e) {}
+var EP1 = "5012058", PAGE_OK = "5069077", PAGE_GROUPE = "5069078", KEY = "se_welcome_pwd_ok_v2";
+if (!new RegExp("[?&]idpage=" + EP1 + "(&|$)").test(window.location.search)) return;
+var force = /[?&]se_pwd=1/.test(window.location.search);
+if (!force) {
+try { if (localStorage.getItem(KEY)) return; } catch (e) {}
+}
+var CSS =
+'#se-ep1-pwd{margin:22px 0 40px;padding:20px 22px;background:#fff7f1;border:1.5px solid #ffd9c2;border-radius:16px;box-shadow:0 8px 24px rgba(255,114,31,.10);font-family:Lato,"Segoe UI",Helvetica,Arial,sans-serif;max-width:860px;box-sizing:border-box}' +
+'#se-ep1-pwd .se-p-t{font-size:18px;font-weight:900;color:#1a2433;margin:0 0 4px}' +
+'#se-ep1-pwd .se-p-s{font-size:14px;color:#6b5d50;margin:0 0 14px;line-height:1.5}' +
+'#se-ep1-pwd .se-p-line{display:flex;gap:8px;align-items:stretch}' +
+'#se-ep1-pwd .se-p-row{position:relative;flex:1;min-width:0}' +
+'#se-ep1-pwd input{width:100%;box-sizing:border-box;padding:12px 44px 12px 14px;border:2px solid #ff721f;border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:#1a2433;outline:none}' +
+'#se-ep1-pwd input:focus{box-shadow:0 0 0 4px rgba(255,114,31,.18)}' +
+'#se-ep1-pwd input.se-p-saved{border-color:#1d7a43;background:#f1faf4}' +
+'#se-ep1-pwd .se-p-eye{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;color:#8a7a6a;cursor:pointer;padding:8px;line-height:0}' +
+'#se-ep1-pwd .se-p-ok{flex-shrink:0;border:0;border-radius:10px;padding:0 18px;min-height:46px;font-size:14px;font-weight:900;font-family:inherit;color:#fff;background:#ff721f;cursor:pointer}' +
+'#se-ep1-pwd .se-p-ok:disabled{opacity:.7;cursor:default}#se-ep1-pwd .se-p-ok.se-p-done{background:#1d7a43;opacity:1}' +
+'#se-ep1-pwd .se-p-hint{font-size:12px;color:#8a7a6a;margin-top:6px}' +
+'#se-ep1-pwd .se-p-msg{font-size:13px;min-height:18px;margin-top:6px}' +
+'#se-ep1-pwd .se-p-msg.err{color:#c0392b}#se-ep1-pwd .se-p-msg.ok{color:#1d7a43;font-weight:700}' +
+'@media (max-width:600px){#se-ep1-pwd .se-p-line{flex-direction:column}#se-ep1-pwd .se-p-ok{min-height:44px}}';
+var EYE = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg>";
+var EYE_OFF = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M3 3l18 18'/><path d='M10.6 6.1A10.6 10.6 0 0 1 12 6c6.5 0 10 6 10 6a17 17 0 0 1-3.2 3.9M6.6 6.6A17 17 0 0 0 2 12s3.5 6 10 6a9.8 9.8 0 0 0 5.4-1.6'/><path d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/></svg>";
 
-function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+function aDejaMdp() { return !!document.querySelector('a[href*="idpage=' + PAGE_GROUPE + '"]'); }
 
-function afficher(prenom) {
-if (document.getElementById("se-welcome")) return;
-var nom = prenom ? ' <span class="se-w-name">' + esc(prenom) + '</span>' : '';
-var css =
-'#se-welcome{position:fixed;inset:0;z-index:100000;background:rgba(26,36,51,.62);display:flex;align-items:center;justify-content:center;padding:16px;font-family:Lato,"Segoe UI",Helvetica,Arial,sans-serif;opacity:0;transition:opacity .35s}' +
-'#se-welcome.se-w-on{opacity:1}' +
-'#se-welcome .se-w-card{position:relative;background:#fff;border-radius:20px;max-width:460px;width:100%;max-height:calc(100vh - 32px);overflow:auto;padding:26px 28px 24px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.25);transform:translateY(14px);transition:transform .45s}' +
-'#se-welcome.se-w-on .se-w-card{transform:none}' +
-'#se-welcome .se-w-x{position:absolute;top:10px;right:12px;width:34px;height:34px;border:0;background:none;color:#b5b5b5;font-size:24px;line-height:1;cursor:pointer}' +
-'#se-welcome .se-w-badge{display:inline-block;background:#fff1e8;color:#c44f0a;font-size:16px;font-weight:900;padding:8px 18px;border-radius:999px;margin-bottom:14px}' +
-'#se-welcome .se-w-title{font-size:26px;font-weight:900;color:#1a2433;line-height:1.2;margin:0 0 16px}' +
-'#se-welcome .se-w-name{color:#ff721f}' +
-'#se-welcome .se-w-media{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#1a2433;margin-bottom:18px}' +
-'#se-welcome .se-w-media img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:50% 45%;animation:seWZoom 14s ease-in-out infinite alternate}' +
-'@keyframes seWZoom{from{transform:scale(1)}to{transform:scale(1.18)}}' +
-'#se-welcome p{font-size:15px;color:#3d3028;line-height:1.6;margin:0 0 10px}' +
-'#se-welcome .se-w-mission{display:block;color:#ff721f;font-weight:900}' +
-'#se-welcome .se-w-tease{font-style:italic;color:#6b5d50;margin-bottom:20px}' +
-'#se-welcome .se-w-btn{display:block;width:100%;box-sizing:border-box;border:0;border-radius:12px;padding:15px;font-size:16px;font-weight:900;font-family:inherit;color:#fff !important;text-decoration:none !important;cursor:pointer;background:linear-gradient(135deg,#ff721f,#ff9a3d);box-shadow:0 10px 28px rgba(255,114,31,.35)}' +
-'#se-welcome .se-w-pwd{background:#fff7f1;border:1px solid #ffe0cc;border-radius:14px;padding:14px 14px 10px;margin:0 0 16px;text-align:left}' +
-'#se-welcome .se-w-pwd-t{font-size:15px;font-weight:900;color:#1a2433;margin-bottom:10px}' +
-'#se-welcome .se-w-pwd-s{font-size:13px;color:#6b5d50;margin:2px 0 10px}' +
-'#se-welcome .se-w-pwd-line{display:flex;gap:8px;align-items:stretch}#se-welcome .se-w-pwd-row{position:relative;flex:1;min-width:0}' +
-'#se-welcome .se-w-pwd-ok{flex-shrink:0;border:0;border-radius:10px;padding:0 16px;min-height:46px;font-size:14px;font-weight:900;font-family:inherit;color:#fff;background:#ff721f;cursor:pointer}' +
-'#se-welcome .se-w-pwd-ok:disabled{opacity:.7;cursor:default}#se-welcome .se-w-pwd-ok.se-w-done{background:#1d7a43;opacity:1}' +
-'#se-welcome .se-w-pwd-row input{width:100%;box-sizing:border-box;padding:12px 44px 12px 14px;border:2px solid #ff721f;animation:seWGlow 1.6s ease-in-out infinite;border-radius:10px;font-size:15px;font-family:inherit;color:#1a2433;background:#fff;outline:none}' +
-'#se-welcome .se-w-pwd-row input:focus{animation:none;border-color:#ff721f;box-shadow:0 0 0 4px rgba(255,114,31,.18)}#se-welcome .se-w-pwd-row input.se-w-saved{animation:none;border-color:#1d7a43;box-shadow:none;background:#f3faf5;cursor:pointer}' +
-'@keyframes seWGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,114,31,0)}50%{box-shadow:0 0 0 6px rgba(255,114,31,.28),0 0 18px rgba(255,114,31,.35)}}' +
-'#se-welcome .se-w-pwd-eye{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;color:#8a7a6a;cursor:pointer;padding:8px;line-height:0}' +
-'#se-welcome .se-w-pwd-msg{font-size:13px;min-height:18px;margin-top:6px}' +
-'#se-welcome .se-w-btn.se-w-off{opacity:.4;pointer-events:none;box-shadow:none;filter:grayscale(.3)}#se-welcome .se-w-pwd-msg a{color:#c44f0a;font-weight:700}' +
-'#se-welcome .se-w-pwd-msg.err{color:#c0392b}#se-welcome .se-w-pwd-msg.ok{color:#1d7a43;font-weight:700}' +
-'@media (max-width:480px){#se-welcome .se-w-title{font-size:22px}#se-welcome .se-w-card{padding:22px 18px 18px}}';
-var html =
-'<style>' + css + '</style>' +
-'<div class="se-w-card" role="dialog" aria-modal="true" aria-labelledby="se-w-title">' +
+function poser() {
+if (document.getElementById("se-ep1-pwd")) return true;
+var frame = document.querySelector('#formation iframe[src*="scorm"]') || document.querySelector('[id^="scormmodule"] iframe') || document.querySelector('#formation iframe');
+if (!frame) return false;
+var cible = frame.closest('[id^="element"]') || frame.closest('[id^="scormmodule"]') || frame.parentElement;
+if (!cible || !cible.parentNode) return false;
+if (!force && aDejaMdp()) { try { localStorage.setItem(KEY, "1"); } catch (e) {} return true; }
+if (!document.getElementById("se-ep1-pwd-css")) { var st = document.createElement("style"); st.id = "se-ep1-pwd-css"; st.textContent = CSS; document.head.appendChild(st); }
+var box = document.createElement("div");
+box.id = "se-ep1-pwd";
+box.innerHTML =
+'<div class="se-p-t">&#128273; Cr&eacute;e ton mot de passe</div>' +
+'<div class="se-p-s">Pour retrouver Nicolas et ta progression quand tu veux, m&ecirc;me depuis un autre appareil.</div>' +
+'<div class="se-p-line"><div class="se-p-row"><input type="password" id="se-p-in" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Ton mot de passe" autocomplete="new-password" aria-label="Ton mot de passe"><button type="button" class="se-p-eye" aria-label="Afficher le mot de passe">' + EYE + '</button></div>' +
+'<button type="button" class="se-p-ok">Valider</button></div>' +
+'<div class="se-p-hint">8 caract&egrave;res minimum</div>' +
+'<div class="se-p-msg" aria-live="polite"></div>';
+cible.parentNode.insertBefore(box, cible.nextSibling);
 
-'<div class="se-w-badge">Accès gratuit activé &#10003;</div>' +
-'<h2 class="se-w-title" id="se-w-title">Welcome' + nom + '&nbsp;!</h2>' +
-'<div class="se-w-media"><img src="' + W.image + '" alt=""></div>' +
-'<p><b>Tu es sur le point de d&eacute;couvrir une nouvelle fa&ccedil;on d\'apprendre qui va te rendre accro &agrave; l\'anglais&nbsp;!</b></p>' +
-'<p>Nicolas a enfin l\'occasion de d&eacute;crocher un stage &agrave; Londres, mais il n\'a que 5 jours pour pr&eacute;parer son anglais avant les entretiens.<br><span class="se-w-mission">Ta mission&nbsp;:</span> l\'aider &agrave; relever le d&eacute;fi, tout en progressant avec lui&nbsp;!</p>' +
-'<div class="se-w-pwd">' +
-'<div class="se-w-pwd-t">&#128273; Cr&eacute;e ton mot de passe <span style="font-weight:400">pour retrouver ta progression &agrave; tout moment.</span></div><div class="se-w-pwd-s">pour retrouver ta progression quand tu veux.</div>' +
-
-'<div class="se-w-pwd-line"><div class="se-w-pwd-row"><input type="text" id="se-w-pwd-in" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Ton mot de passe" autocomplete="new-password" aria-label="Ton mot de passe"><button type="button" class="se-w-pwd-eye" aria-label="Masquer le mot de passe"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 6.1A10.6 10.6 0 0 1 12 6c6.5 0 10 6 10 6a17 17 0 0 1-3.2 3.9M6.6 6.6A17 17 0 0 0 2 12s3.5 6 10 6a9.8 9.8 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></div><button type="button" class="se-w-pwd-ok">Valider</button></div>' +
-'<div class="se-w-rl"><i>8 caract&egrave;res minimum</i></div>' +
-'<div class="se-w-pwd-msg" aria-live="polite"></div>' +
-'</div>' +
-'<a class="se-w-btn se-w-off" aria-disabled="true" href="' + W.episode1 + '">J\'entre dans l\'aventure</a>' +
-'</div>';
-var o = document.createElement("div");
-o.id = "se-welcome";
-o.innerHTML = html;
-document.body.appendChild(o); try { sessionStorage.setItem("se_w_s", "1"); } catch (e) {}
-requestAnimationFrame(function () { requestAnimationFrame(function () { o.className = "se-w-on"; }); });
-
-function fermer() { o.className = ""; setTimeout(function () { o.remove(); }, 350); document.removeEventListener("keydown", onKey); }
-function onKey(e) { if (e.key === "Escape") fermer(); }
-
-// Mot de passe dans la modale : enregistre via le formulaire officiel /formation/profil/password/
-function activerCta() { var c = o.querySelector(".se-w-btn"); c.classList.remove("se-w-off"); c.removeAttribute("aria-disabled"); }
-var pIn = o.querySelector("#se-w-pwd-in"), pMsg = o.querySelector(".se-w-pwd-msg"), pOk = false;
-o.querySelector(".se-w-pwd-eye").addEventListener("click", function () {
-var v = pIn.type === "password"; pIn.type = v ? "text" : "password"; this.innerHTML = v ? "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M3 3l18 18'/><path d='M10.6 6.1A10.6 10.6 0 0 1 12 6c6.5 0 10 6 10 6a17 17 0 0 1-3.2 3.9M6.6 6.6A17 17 0 0 0 2 12s3.5 6 10 6a9.8 9.8 0 0 0 5.4-1.6'/><path d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/></svg>" : "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg>"; this.setAttribute("aria-label", v ? "Masquer le mot de passe" : "Afficher le mot de passe");
+var pIn = box.querySelector("#se-p-in"), pMsg = box.querySelector(".se-p-msg"), pBtn = box.querySelector(".se-p-ok");
+box.querySelector(".se-p-eye").addEventListener("click", function () {
+var montrer = pIn.type === "password"; pIn.type = montrer ? "text" : "password"; this.innerHTML = montrer ? EYE_OFF : EYE;
 });
-function pErr(t) { pMsg.className = "se-w-pwd-msg err"; pMsg.innerHTML = t; }
-function enregistrerMdp() {
+function pErr(t) { pMsg.className = "se-p-msg err"; pMsg.innerHTML = t; }
+function enregistrer() {
 var a = pIn.value;
-if (a.length < 8) { pErr("Ton mot de passe doit faire au moins 8 caract&egrave;res."); pIn.focus(); return Promise.reject("court"); }
-pMsg.className = "se-w-pwd-msg"; pMsg.innerHTML = "Enregistrement&hellip;";
-return fetch("/formation/profil/password/", { credentials: "include" })
+if (a.length < 8) { pErr("Ton mot de passe doit faire au moins 8 caract&egrave;res."); pIn.focus(); return; }
+pBtn.disabled = true; pBtn.textContent = "..."; pMsg.className = "se-p-msg"; pMsg.innerHTML = "Enregistrement&hellip;";
+fetch("/formation/profil/password/", { credentials: "include" })
 .then(function (r) { return r.text(); })
 .then(function (h) {
 var d = new DOMParser().parseFromString(h, "text/html");
@@ -1036,65 +1012,28 @@ return fetch(f.getAttribute("action") || "/formation/profil/password/", { method
 .then(function (h) {
 var d = new DOMParser().parseFromString(h, "text/html");
 var bad = d.querySelector(".alert-danger, .alert-error, .has-error .help-block");
-if (bad && bad.textContent.trim()) { pErr(bad.textContent.trim()); throw new Error("refus"); }
-pOk = true; pIn.readOnly = true; pIn.classList.add("se-w-saved"); activerCta(); try { localStorage.setItem(W.seenKey, "1"); } catch (e) {} try { var frMdp = document.createElement("iframe"); frMdp.style.display = "none"; frMdp.src = "/formation/formation/84378/?idmodule=897263&idpage=5069077"; document.body.appendChild(frMdp); } catch (e) {}
-setTimeout(fermer, 900); pMsg.className = "se-w-pwd-msg ok"; pMsg.innerHTML = "&#10003; Mot de passe enregistr&eacute;, tu peux commencer&nbsp;! <span style=\"color:#8a7a6a;font-weight:400\">(clique dans le champ pour le changer)</span>";
+if (bad && bad.textContent.trim()) { var e = new Error("refus"); e.txt = bad.textContent.trim(); throw e; }
+try { localStorage.setItem(KEY, "1"); } catch (e) {}
+// visite de la page « Validation mot de passe » : la règle LearnyBox met le membre dans le groupe « Mot de passe créé »
+try { var fr = document.createElement("iframe"); fr.style.display = "none"; fr.src = "/formation/formation/84378/?idmodule=897263&idpage=" + PAGE_OK; document.body.appendChild(fr); } catch (e) {}
+pIn.readOnly = true; pIn.classList.add("se-p-saved");
+pBtn.innerHTML = "&#10003;"; pBtn.classList.add("se-p-done");
+pMsg.className = "se-p-msg ok"; pMsg.innerHTML = "&#10003; Mot de passe enregistr&eacute;&nbsp;! Tu pourras te connecter avec ton adresse mail et ce mot de passe.";
 })
 .catch(function (e) {
-if (e && e.message === "refus") throw e;
-pErr("Oups, &ccedil;a n&rsquo;a pas march&eacute;. R&eacute;essaie, ou <a href=\"#\" class=\"se-w-skip\">continue sans</a>.");
-var sk = pMsg.querySelector(".se-w-skip"); if (sk) sk.addEventListener("click", function (ev) { ev.preventDefault(); pOk = true; activerCta(); pMsg.innerHTML = ""; });
-throw e;
+pBtn.disabled = false; pBtn.textContent = "Valider";
+if (e && e.message === "refus") pErr(e.txt);
+else pErr("Oups, &ccedil;a n&rsquo;a pas march&eacute;. R&eacute;essaie dans un instant.");
 });
 }
-var rl = o.querySelectorAll(".se-w-rl i");
-pIn.addEventListener("input", function () { var a = pIn.value, t = [a.length > 7]; for (var k = 0; k < 1; k++) rl[k].classList.toggle("on", t[k]); if (!pOk) o.querySelector(".se-w-btn").classList.toggle("se-w-off", t.indexOf(false) > -1); });
-var pBtn = o.querySelector(".se-w-pwd-ok");
-function validerMdp() { pBtn.disabled = true; pBtn.textContent = "..."; return enregistrerMdp().then(function () { pBtn.innerHTML = "&#10003;"; pBtn.classList.add("se-w-done"); }, function (e) { pBtn.disabled = false; pBtn.textContent = "Valider"; throw e; }); }
-pBtn.addEventListener("click", function () {
-validerMdp().catch(function () {});
-});
-pIn.addEventListener("focus", function () {
-if (!pIn.readOnly) return;
-pIn.readOnly = false; pIn.classList.remove("se-w-saved"); pIn.value = "";
-pBtn.disabled = false; pBtn.classList.remove("se-w-done"); pBtn.textContent = "Valider";
-pMsg.className = "se-w-pwd-msg"; pMsg.innerHTML = "Tape ton nouveau mot de passe puis valide.";
-});
-pIn.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); validerMdp().catch(function () {}); } });
-o.querySelector(".se-w-btn").addEventListener("click", function (e) {
-if (pOk || !pIn.value) return;
-e.preventDefault(); e.stopImmediatePropagation();
-var lien = this.getAttribute("href");
-validerMdp().then(function () {
-setTimeout(function () {
-
-}, 900);
-}).catch(function () {});
-});
-
-o.querySelector(".se-w-btn").addEventListener("click", function (e) {
-e.preventDefault(); fermer();
-});
+pBtn.addEventListener("click", enregistrer);
+pIn.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); enregistrer(); } });
+return true;
 }
-
-function demarrer() { var done = false; function go(p) { if (done) return; done = true; afficher(p); } setTimeout(function () { go(""); }, 600);
-fetch("/formation/profil/", { credentials: "include" })
-.then(function (r) { return r.text(); })
-.then(function (h) {
-var i = new DOMParser().parseFromString(h, "text/html").querySelector('input[name="fname"]');
-go(i && i.value ? i.value.trim().split(" ")[0] : "");
-})
-.catch(function () { go(""); });
-}
-
-if (force) { demarrer(); return; }
-// Attend que le bloc Freemium ait déterminé le statut du membre (sessionStorage « se_fm_status »)
-var ss = null; try { ss = sessionStorage.getItem("se_w_fm"); } catch (e) {}
-if (ss === "1") return demarrer(); if (ss === "0") return;
-var liensMod = document.querySelectorAll('a[href*="idmodule="]'); if (liensMod.length) { var fmDom = !document.querySelector('a[href*="idmodule=841416"]') && !document.querySelector('a[href*="idpage=5069078"]'); try { sessionStorage.setItem("se_w_fm", fmDom ? "1" : "0"); } catch (e) {} if (fmDom) demarrer(); return; }
-fetch("/formation/home/?idformation=84378", { credentials: "include" }).then(function (r) { return r.text(); }).then(function (h) { var dh = new DOMParser().parseFromString(h, "text/html"); var fm = !dh.querySelector('a[href*="idmodule=841416"]') && !dh.querySelector('a[href*="idpage=5069078"]'); try { sessionStorage.setItem("se_w_fm", fm ? "1" : "0"); } catch (e) {} if (fm) demarrer(); }).catch(function () {});
+function go() { if (!poser()) { [300, 1000, 2500, 5000].forEach(function (t) { setTimeout(poser, t); }); } }
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go); else go();
 })();
-/*                FIN ÉCRAN DE BIENVENUE                */
+/*                FIN MOT DE PASSE SOUS L'ÉPISODE 1                */
 
 /* ===== BOUTON PLAY BRILLANT - play du haut (accueil) ===== */
 (function () {
