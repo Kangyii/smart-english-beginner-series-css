@@ -964,7 +964,7 @@ var CSS =
 '#se-ep1-pwd .se-p-msg{font-size:13px;min-height:18px;margin-top:6px}' +
 '#se-ep1-pwd .se-p-msg.err{color:#c0392b}#se-ep1-pwd .se-p-msg.ok{color:#1d7a43;font-weight:700}' +
 '#se-ep1-hint{text-align:center;margin:12px 0 0;font-size:14px;font-weight:600;color:#FF721F;font-family:Lato,sans-serif}' +
-'.sep-vid.se-has-pwd::after{display:none !important;content:none !important}' +
+'.sep-vid:has(#se-ep1-pwd)::after{display:none !important;content:none !important}' +
 '@media (max-width:600px){#se-ep1-pwd .se-p-line{flex-direction:column}#se-ep1-pwd .se-p-ok{min-height:44px}}';
 var EYE = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg>";
 var EYE_OFF = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M3 3l18 18'/><path d='M10.6 6.1A10.6 10.6 0 0 1 12 6c6.5 0 10 6 10 6a17 17 0 0 1-3.2 3.9M6.6 6.6A17 17 0 0 0 2 12s3.5 6 10 6a9.8 9.8 0 0 0 5.4-1.6'/><path d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/></svg>";
@@ -988,14 +988,11 @@ box.innerHTML =
 '<button type="button" class="se-p-ok">Valider</button></div>' +
 '<div class="se-p-hint">8 caract&egrave;res minimum</div>' +
 '<div class="se-p-msg" aria-live="polite"></div>';
-var vid = frame.closest('.sep-vid');
-if (vid) {
-// page épisode remise en forme : le bloc va sous la vidéo, après la consigne « Clique sur play »
+// consigne « Clique sur play » juste sous la vidéo, puis le bloc mot de passe
+// (la consigne d'origine, ajoutée en ::after du bloc vidéo, est masquée par le CSS ci-dessus)
 var hint = document.createElement("div"); hint.id = "se-ep1-hint"; hint.innerHTML = "&#9654;&#xFE0E;&nbsp; Clique sur play pour lancer l&rsquo;&eacute;pisode";
-vid.appendChild(hint); vid.appendChild(box); vid.classList.add("se-has-pwd");
-} else {
-cible.parentNode.insertBefore(box, cible.nextSibling);
-}
+cible.parentNode.insertBefore(hint, cible.nextSibling);
+cible.parentNode.insertBefore(box, hint.nextSibling);
 
 var pIn = box.querySelector("#se-p-in"), pMsg = box.querySelector(".se-p-msg"), pBtn = box.querySelector(".se-p-ok");
 box.querySelector(".se-p-eye").addEventListener("click", function () {
