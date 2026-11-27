@@ -949,7 +949,7 @@ if (!force) {
 try { if (localStorage.getItem(KEY)) return; } catch (e) {}
 }
 var CSS =
-'#se-ep1-pwd{margin:22px 0 40px;padding:20px 22px;background:#fff7f1;border:1.5px solid #ffd9c2;border-radius:16px;box-shadow:0 8px 24px rgba(255,114,31,.10);font-family:Lato,"Segoe UI",Helvetica,Arial,sans-serif;max-width:860px;box-sizing:border-box}' +
+'#se-ep1-pwd{margin:16px 0 0;padding:20px 22px;background:#fff7f1;border:1.5px solid #ffd9c2;border-radius:16px;box-shadow:0 8px 24px rgba(255,114,31,.10);font-family:Lato,"Segoe UI",Helvetica,Arial,sans-serif;max-width:860px;box-sizing:border-box}' +
 '#se-ep1-pwd .se-p-t{font-size:18px;font-weight:900;color:#1a2433;margin:0 0 4px}' +
 '#se-ep1-pwd .se-p-s{font-size:14px;color:#6b5d50;margin:0 0 14px;line-height:1.5}' +
 '#se-ep1-pwd .se-p-line{display:flex;gap:8px;align-items:stretch}' +
@@ -965,6 +965,7 @@ var CSS =
 '#se-ep1-pwd .se-p-msg.err{color:#c0392b}#se-ep1-pwd .se-p-msg.ok{color:#1d7a43;font-weight:700}' +
 '#se-ep1-hint{text-align:center;margin:12px 0 0;font-size:14px;font-weight:600;color:#FF721F;font-family:Lato,sans-serif}' +
 '.sep-vid:has(#se-ep1-pwd)::after{display:none !important;content:none !important}' +
+'body:has(#se-ep1-pwd) #sep-car{margin-top:8px !important}body:has(#se-ep1-pwd) .page > .line{padding-bottom:16px !important}' +
 '@media (max-width:600px){#se-ep1-pwd .se-p-line{flex-direction:column}#se-ep1-pwd .se-p-ok{min-height:44px}}';
 var EYE = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg>";
 var EYE_OFF = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M3 3l18 18'/><path d='M10.6 6.1A10.6 10.6 0 0 1 12 6c6.5 0 10 6 10 6a17 17 0 0 1-3.2 3.9M6.6 6.6A17 17 0 0 0 2 12s3.5 6 10 6a9.8 9.8 0 0 0 5.4-1.6'/><path d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/></svg>";
