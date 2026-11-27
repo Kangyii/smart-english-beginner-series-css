@@ -949,21 +949,24 @@ if (!force) {
 try { if (localStorage.getItem(KEY)) return; } catch (e) {}
 }
 var CSS =
-'#se-ep1-pwd{margin:22px 0 40px;padding:20px 22px;background:#fff7f1;border:1.5px solid #ffd9c2;border-radius:16px;box-shadow:0 8px 24px rgba(255,114,31,.10);font-family:Lato,"Segoe UI",Helvetica,Arial,sans-serif;max-width:860px;box-sizing:border-box}' +
-'#se-ep1-pwd .se-p-t{font-size:18px;font-weight:900;color:#1a2433;margin:0 0 4px}' +
-'#se-ep1-pwd .se-p-s{font-size:14px;color:#6b5d50;margin:0 0 14px;line-height:1.5}' +
-'#se-ep1-pwd .se-p-line{display:flex;gap:8px;align-items:stretch}' +
+'#se-ep1-pwd{background:#fef8f5 !important;border-radius:20px !important;padding:25px !important;margin:0 0 20px !important;font-family:Lato,sans-serif;box-sizing:border-box}' +
+'#se-ep1-pwd .se-p-h{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:#9a8a7a;margin:0 0 12px}' +
+'#se-ep1-pwd .se-p-h i{color:#ff721f;margin-right:6px}' +
+'#se-ep1-pwd .se-p-s{font-size:14px;color:#3d3028;margin:0 0 14px;line-height:1.5}' +
+'#se-ep1-pwd .se-p-line{display:flex;gap:10px;align-items:stretch}' +
 '#se-ep1-pwd .se-p-row{position:relative;flex:1;min-width:0}' +
-'#se-ep1-pwd input{width:100%;box-sizing:border-box;padding:12px 44px 12px 14px;border:2px solid #ff721f;border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:#1a2433;outline:none}' +
-'#se-ep1-pwd input:focus{box-shadow:0 0 0 4px rgba(255,114,31,.18)}' +
-'#se-ep1-pwd input.se-p-saved{border-color:#1d7a43;background:#f1faf4}' +
-'#se-ep1-pwd .se-p-eye{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;color:#8a7a6a;cursor:pointer;padding:8px;line-height:0}' +
-'#se-ep1-pwd .se-p-ok{flex-shrink:0;border:0;border-radius:10px;padding:0 18px;min-height:46px;font-size:14px;font-weight:900;font-family:inherit;color:#fff;background:#ff721f;cursor:pointer}' +
-'#se-ep1-pwd .se-p-ok:disabled{opacity:.7;cursor:default}#se-ep1-pwd .se-p-ok.se-p-done{background:#1d7a43;opacity:1}' +
-'#se-ep1-pwd .se-p-hint{font-size:12px;color:#8a7a6a;margin-top:6px}' +
-'#se-ep1-pwd .se-p-msg{font-size:13px;min-height:18px;margin-top:6px}' +
+'#se-ep1-pwd input{width:100%;box-sizing:border-box;height:46px;padding:0 44px 0 16px;background:#fff;border:1.5px solid rgba(255,114,31,.2);border-radius:14px;font-family:Lato,sans-serif;font-size:14px;color:#3d3028;outline:none;box-shadow:none;transition:border-color .2s}' +
+'#se-ep1-pwd input::placeholder{color:#c0a888}' +
+'#se-ep1-pwd input:focus{border-color:#ff721f}' +
+'#se-ep1-pwd input.se-p-saved{border-color:rgba(29,122,67,.35);background:#fff}' +
+'#se-ep1-pwd .se-p-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;color:#c0a888;cursor:pointer;padding:8px;line-height:0}' +
+'#se-ep1-pwd .se-p-ok{flex-shrink:0;height:46px;padding:0 22px;border:0;border-radius:10px;background:linear-gradient(90deg,#ff721f,#ff973c);color:#fff;font-family:Lato,sans-serif;font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 4px 14px rgba(255,114,31,.3);transition:opacity .2s,transform .2s}' +
+'#se-ep1-pwd .se-p-ok:hover{opacity:.88;transform:translateY(-1px)}' +
+'#se-ep1-pwd .se-p-ok:disabled{opacity:.7;cursor:default;transform:none}#se-ep1-pwd .se-p-ok.se-p-done{background:#1d7a43;box-shadow:none;opacity:1}' +
+'#se-ep1-pwd .se-p-hint{font-size:12px;color:#9a8a7a;margin-top:8px}' +
+'#se-ep1-pwd .se-p-msg{font-size:13px;margin-top:4px}#se-ep1-pwd .se-p-msg:empty{display:none}' +
 '#se-ep1-pwd .se-p-msg.err{color:#c0392b}#se-ep1-pwd .se-p-msg.ok{color:#1d7a43;font-weight:700}' +
-'@media (max-width:600px){#se-ep1-pwd .se-p-line{flex-direction:column}#se-ep1-pwd .se-p-ok{min-height:44px}}';
+'@media (max-width:600px){#se-ep1-pwd{padding:20px !important}#se-ep1-pwd .se-p-line{flex-direction:column}}';
 var EYE = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z'/><circle cx='12' cy='12' r='3'/></svg>";
 var EYE_OFF = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M3 3l18 18'/><path d='M10.6 6.1A10.6 10.6 0 0 1 12 6c6.5 0 10 6 10 6a17 17 0 0 1-3.2 3.9M6.6 6.6A17 17 0 0 0 2 12s3.5 6 10 6a9.8 9.8 0 0 0 5.4-1.6'/><path d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/></svg>";
 
@@ -973,15 +976,15 @@ function poser() {
 if (document.getElementById("se-ep1-pwd")) return true;
 var frame = document.querySelector('#formation iframe[src*="scorm"]') || document.querySelector('[id^="scormmodule"] iframe') || document.querySelector('#formation iframe');
 if (!frame) return false;
-var cible = frame.closest('[id^="element"]') || frame.closest('[id^="scormmodule"]') || frame.parentElement;
+var cible = frame.closest('.maincontainer') || frame.closest('[id^="element"]') || frame.closest('[id^="scormmodule"]') || frame.parentElement;
 if (!cible || !cible.parentNode) return false;
 if (!force && aDejaMdp()) { try { localStorage.setItem(KEY, "1"); } catch (e) {} return true; }
 if (!document.getElementById("se-ep1-pwd-css")) { var st = document.createElement("style"); st.id = "se-ep1-pwd-css"; st.textContent = CSS; document.head.appendChild(st); }
 var box = document.createElement("div");
-box.id = "se-ep1-pwd";
+box.id = "se-ep1-pwd"; box.className = "maincontainer";
 box.innerHTML =
-'<div class="se-p-t">&#128273; Cr&eacute;e ton mot de passe</div>' +
-'<div class="se-p-s">Pour retrouver Nicolas et ta progression quand tu veux, m&ecirc;me depuis un autre appareil.</div>' +
+'<div class="se-p-h"><i class="fa fa-lock"></i>Ton mot de passe</div>' +
+'<div class="se-p-s">Choisis ton mot de passe pour retrouver Nicolas et ta progression quand tu veux, m&ecirc;me depuis un autre appareil.</div>' +
 '<div class="se-p-line"><div class="se-p-row"><input type="password" id="se-p-in" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Ton mot de passe" autocomplete="new-password" aria-label="Ton mot de passe"><button type="button" class="se-p-eye" aria-label="Afficher le mot de passe">' + EYE + '</button></div>' +
 '<button type="button" class="se-p-ok">Valider</button></div>' +
 '<div class="se-p-hint">8 caract&egrave;res minimum</div>' +
