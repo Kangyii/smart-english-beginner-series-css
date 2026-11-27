@@ -1220,15 +1220,13 @@ HERO ACCUEIL : « Ton aventure commence ici » + prénom du membre
 if (!/\/formation\/home\//.test(window.location.pathname) && !document.body.classList.contains("home")) return;
 var prenom = null, essais = 0;
 function poser() {
-if (!prenom) return false;
+if (!prenom) return;
 var sp = document.querySelector(".sen-tt > span");
-if (!sp || !/^\s*Ton aventure commence ici/i.test(sp.textContent)) return false;
-if (sp.getAttribute("data-se-prenom")) return true;
-sp.setAttribute("data-se-prenom", "1");
+if (!sp || !/^\s*Ton aventure commence ici\s*$/i.test(sp.textContent)) return;
 sp.textContent = "Ton aventure commence ici " + prenom;
-return true;
 }
-function boucle() { if (poser() || ++essais > 40) return; setTimeout(boucle, 250); }
+// l'accueil est redessiné par un autre script après le chargement : on repose le prénom pendant 20 s
+function boucle() { poser(); if (++essais < 80) setTimeout(boucle, 250); }
 fetch("/formation/profil/", { credentials: "include" })
 .then(function (r) { return r.text(); })
 .then(function (h) {
