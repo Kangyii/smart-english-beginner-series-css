@@ -1143,3 +1143,30 @@ var h2=q('.hd h2',car);if(h2)h2.textContent='Tous les épisodes';
 var s2=q('.s2');if(s2){var st=q('.s2-stage',s2),v=q('video',s2);if(st&&!q('.sea-pt',st)){var pt=document.createElement('div');pt.className='sea-pt';pt.innerHTML='<small>Objectif London &middot; '+(C?C.m:'')+'</small><b>'+(C?C.t:'')+'</b>';st.appendChild(pt)}if(v){var u=function(){s2.classList.toggle('sea-on',!v.paused)};v.addEventListener('play',u);v.addEventListener('pause',u);v.addEventListener('ended',u)}}
 return true}
 var n=0;(function t(){if(!go()&&++n<60)setTimeout(t,250)})()})();
+
+;/* ===== EARLY ACCESS : mini-serie terminee (header M2 + barre mobile en bas) ===== */
+(function(){
+var URL_EA='https://www.smartenglish.fr/fin-essai-gratuit/',KEY='senD';
+try{var qs=location.search;if(/[?&]seea=1/.test(qs))sessionStorage.setItem('seea_f','1');if(/[?&]seea=0/.test(qs))sessionStorage.removeItem('seea_f')}catch(e){}
+function forced(){try{return sessionStorage.getItem('seea_f')==='1'}catch(e){return false}}
+function state(){var seen=0,n=0,acc;try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&d.pil){n=d.pil.length;seen=d.pil.filter(function(p){return p.d}).length;acc=d.acc}}catch(e){}
+var car=document.querySelectorAll('#sep-car .tr>a.c');if(car.length){var b=0;[].forEach.call(car,function(a){if(a.querySelector('.br'))b++});if(b>seen){seen=b;n=car.length}}
+return {done:forced()||(n>0&&seen>=n&&acc!==true)}}
+var LOCK='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>',
+ARR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+CHK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>';
+var BTN='<a class="seea-b" href="'+URL_EA+'">'+LOCK+'<span><b>Débloque la suite</b><small>Saisons 1 à 4 · Early Access</small></span>'+ARR+'</a>';
+var CSS='@media(min-width:769px){.nav-serie-bloc.seea-on>*:not(.seea){display:none!important}.nav-serie-bloc.seea-on{display:flex!important;align-items:center}}@media(max-width:768px){.nav-serie-bloc>.seea{display:none!important}}'+
+'.seea{display:flex;align-items:center;gap:14px;margin-left:18px}.seea-t{display:flex;flex-direction:column;gap:2px;color:#fff;font-size:13px;line-height:1.2;font-weight:700;white-space:nowrap}.seea-t b{display:flex;align-items:center;gap:4px;font-weight:800}'+
+'.seea-b{display:flex!important;align-items:center;gap:10px;background:#fff;color:#FF721F!important;text-decoration:none!important;border-radius:12px;padding:7px 14px;font-weight:800;line-height:1.15;white-space:nowrap;transition:transform .15s,box-shadow .15s}.seea-b:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(122,42,6,.18)}'+
+'.seea-b span{display:flex;flex-direction:column}.seea-b b{font-size:15px;font-weight:800}.seea-b small{font-size:11px;color:#9A4A1E;font-weight:700}'+
+'#seea-m{display:none}@media(max-width:768px){#seea-m{display:flex;flex-direction:column;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:9990;background:#fff;border-top:2px solid #FFE1CF;padding:12px 16px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(122,42,6,.08);font-family:inherit}'+
+'#seea-m .r{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#7A2A06}#seea-m .r b{display:flex;align-items:center;gap:4px;color:#FF721F}#seea-m .k{height:7px;border-radius:7px;background:#FF721F}'+
+'#seea-m .seea-b{justify-content:space-between;border:2px solid #FFE1CF}#seea-m .seea-b span{flex:1}body.seea-pad{padding-bottom:210px!important}}';
+function go(){if(!state().done)return false;if(!document.getElementById('seea-css')){var st=document.createElement('style');st.id='seea-css';st.textContent=CSS;document.head.appendChild(st)}
+var bl=document.querySelector('.nav-serie-bloc');if(bl&&!bl.querySelector('.seea')){var d=document.createElement('div');d.className='seea';d.innerHTML='<div class="seea-t"><span>Mini-série</span><b>'+CHK+'Terminée</b></div>'+BTN;bl.appendChild(d);bl.classList.add('seea-on')}
+if(!document.getElementById('seea-m')){var m=document.createElement('div');m.id='seea-m';m.innerHTML='<div class="r"><span>Mini-série</span><b>'+CHK+'100%</b></div><div class="k"></div>'+BTN;document.body.appendChild(m);document.body.classList.add('seea-pad')}
+var tb=document.getElementById('se-tabbar'),mm=document.getElementById('seea-m');if(mm)mm.style.bottom=(tb&&tb.offsetHeight?tb.offsetHeight+12:0)+'px';
+return true}
+var n=0;(function t(){go();if(++n<20)setTimeout(t,500)})();
+})();
