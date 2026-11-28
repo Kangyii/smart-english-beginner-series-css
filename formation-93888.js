@@ -1216,16 +1216,22 @@ function go(){if(!document.querySelector('.s2'))return false;if(!document.getEle
 var n=0;(function t(){go();if(++n<30)setTimeout(t,500)})();
 })();
 
-;/* ===== TEST : page episode facon ADN v2 (lecteur pleine largeur dans une bande, carte infos, onglets Episodes / A propos / Commentaires, grille d'episodes) ===== */
+;/* ===== TEST : page episode facon ADN v3 (bande cinema sombre pleine largeur derriere le lecteur, sections empilees sans onglets) ===== */
 (function(){
-var CSS='@media(min-width:0px){body:has(#sep-head) .sequence{grid-template-columns:minmax(0,1fr)!important;column-gap:0!important}'+
-'body:has(#sep-head) .sequence .s2{position:relative;max-width:1080px!important;width:100%;margin:30px auto 0!important;justify-self:center;z-index:0}'+
-'body:has(#sep-head) .sequence .s2::before{content:"";position:absolute;left:-28px;right:-28px;top:-26px;bottom:-26px;border-radius:24px;background:linear-gradient(#FFF4EC,#FFE6D3);z-index:-1}'+
-'#sea-nav{display:none!important}'+
-'#sep-head{grid-row:3;margin:52px 0 0!important;padding:20px 24px!important;background:#fff;border:1px solid #FFE1CF;border-radius:16px;box-shadow:0 8px 26px rgba(122,42,6,.06)}'+
-'#sea-tabs{margin:26px 0 20px!important}#sea-tabs .m{display:block!important}'+
-'body:has(#sep-head) #sep-car{grid-column:1!important;grid-row:5!important;position:static!important;padding:0!important;border:0!important;box-shadow:none!important;background:none!important;margin:0!important}'+
+var CSS='body:has(#sep-head) [class*=col-]:has(> .sequence){width:100%!important;max-width:100%!important;flex:0 0 100%!important}body:has(#sep-head) .sequence{grid-template-columns:minmax(0,1fr)!important;column-gap:0!important}'+
+'body:has(#sep-head) .sequence .s2{position:relative;z-index:2;max-width:1120px!important;width:100%;margin:34px auto 0!important;justify-self:center}'+
+'body:has(#sep-head) .sequence .s2 .s2-stage{box-shadow:0 30px 80px rgba(0,0,0,.55)!important}'+
+'#sea-cine{position:absolute;left:0;width:100%;z-index:1;pointer-events:none;overflow:hidden;background:#140a05}'+
+'#sea-cine i{position:absolute;inset:-40px;background:center/cover no-repeat;filter:blur(28px) saturate(1.15);opacity:.55;transform:scale(1.1)}'+
+'#sea-cine b{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(20,10,5,.15),rgba(20,10,5,.85) 75%),linear-gradient(rgba(20,10,5,0) 70%,rgba(20,10,5,.9))}'+
+'#sea-nav,#sea-tabs{display:none!important}'+
+'#sep-head{grid-row:3;margin:56px 0 0!important;padding:20px 24px!important;background:#fff;border:1px solid #FFE1CF;border-radius:16px;box-shadow:0 8px 26px rgba(122,42,6,.06)}'+
+'body:has(#sep-head) #sep-about{grid-row:4!important;margin:28px 0 0!important}'+
+'body:has(#sep-head) #sep-car{grid-column:1!important;grid-row:5!important;position:static!important;padding:0!important;border:0!important;box-shadow:none!important;background:none!important;margin:36px 0 0!important}'+
+'body:has(#sep-head) .sequence .sea-com{grid-row:6!important;margin-top:36px!important}'+
+'#sep-car.sea-hide,#sep-about.sea-hide,.sea-com.sea-hide{display:block!important}'+
 '#sep-car .hd,#sep-car .sea-next{display:none!important}'+
+'.sea-h2{font-size:22px;font-weight:800;color:#7A2A06;margin:0 0 16px}'+
 '#sep-car .tr{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 18px!important;overflow:visible!important;transform:none!important;width:auto!important}'+
 '#sep-car .tr>a.c{display:block!important;padding:0!important;background:none!important;box-shadow:none!important;border-radius:0!important}'+
 '#sep-car .tr>a.c .th{display:block;position:relative;width:100%!important;height:auto!important;aspect-ratio:16/9;border-radius:12px!important;margin:0 0 9px!important;overflow:hidden;transition:transform .2s,box-shadow .2s}'+
@@ -1234,14 +1240,19 @@ var CSS='@media(min-width:0px){body:has(#sep-head) .sequence{grid-template-colum
 '#sep-car .tr>a.c.cur .th::after{content:"";position:absolute;inset:0;background:rgba(122,42,6,.45) url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath d=%27M8 5v14l11-7z%27 fill=%27%23fff%27/%3E%3C/svg%3E") center/38px no-repeat}'+
 '#sep-car .tr>a.c .m{font-size:12px!important;font-weight:800!important;color:#FF721F!important;margin:0 0 2px!important}'+
 '#sep-car .tr>a.c .t{font-size:15px!important;font-weight:800!important;line-height:1.3!important;color:#7A2A06!important}'+
-'}@media(max-width:991px){#sep-car .tr{grid-template-columns:repeat(2,minmax(0,1fr))}body:has(#sep-head) .sequence .s2::before{top:-12px;bottom:-12px;left:-12px;right:-12px;border-radius:18px}body:has(#sep-head) .sequence .s2{margin-top:14px!important}#sep-head{margin-top:30px!important;padding:16px!important}#sea-tabs{gap:20px!important}#sea-tabs button{white-space:nowrap;font-size:12px!important}}';
+'@media(max-width:991px){#sep-car .tr{grid-template-columns:repeat(2,minmax(0,1fr))}body:has(#sep-head) .sequence .s2{margin-top:18px!important}#sep-head{margin-top:36px!important;padding:16px!important}}';
 function q(s,r){return(r||document).querySelector(s)}
-function go(){var tb=q('#sea-tabs'),car=q('#sep-car'),ab=q('#sep-about');if(!tb||!car||!ab)return false;if(tb.dataset.v2)return true;
-if(!q('#sea2-css')){var st=document.createElement('style');st.id='sea2-css';st.textContent=CSS;document.head.appendChild(st)}
-var com=q('.sequence .sea-com');var nt=tb.cloneNode(true);nt.dataset.v2='1';tb.parentNode.replaceChild(nt,tb);
-var bE=q('[data-p=e]',nt),bA=q('[data-p=a]',nt);if(bE){bE.classList.remove('m');bE.textContent='Épisodes';nt.insertBefore(bE,nt.firstChild)}
-var pan={e:car,a:ab,c:com};
-function sh(k){[].forEach.call(nt.children,function(b){b.classList.toggle('on',b.dataset.p==k)});Object.keys(pan).forEach(function(x){if(pan[x])pan[x].classList.toggle('sea-hide',x!=k)})}
-nt.addEventListener('click',function(e){var b=e.target.closest('button');if(b)sh(b.dataset.p)});sh('e');addEventListener('resize',function(){var o=q('#sea-tabs .on');if(o)sh(o.dataset.p)});return true}
+var band=null;
+function place(){var s2=q('.sequence .s2');if(!s2||!band)return;var r=s2.getBoundingClientRect(),y=scrollY||document.documentElement.scrollTop||0;
+var h=q('.line:has(.se-navbar-inner)'),hb=h?h.getBoundingClientRect().bottom+y:0,top=Math.max(hb,r.top+y-90),pad=document.documentElement.clientWidth<992?18:36;
+band.style.top=top+'px';band.style.height=(r.bottom+y+pad-top)+'px'}
+function unhide(){['#sep-car','#sep-about','.sequence .sea-com'].forEach(function(s){var e=q(s);if(e)e.classList.remove('sea-hide')})}
+function go(){var car=q('#sep-car'),s2=q('.sequence .s2'),hd=q('#sep-head');if(!car||!s2||!hd||!q('#sea-tabs'))return false;if(q('#sea-cine'))return true;
+var st=document.createElement('style');st.id='sea3-css';st.textContent=CSS;document.head.appendChild(st);
+var old=q('#sea2-css');if(old)old.remove();
+unhide();if(!q('.sea-h2',car)){var h2=document.createElement('h2');h2.className='sea-h2';h2.textContent='Épisodes';car.insertBefore(h2,q('.tr',car))}
+band=document.createElement('div');band.id='sea-cine';var cur=q('#sep-car .tr>a.c.cur .th'),img=cur?cur.style.backgroundImage:'';band.innerHTML='<i style="background-image:'+img.replace(/"/g,"'")+'"></i><b></b>';document.body.appendChild(band);
+place();addEventListener('resize',function(){unhide();place()});addEventListener('load',place);if(window.ResizeObserver)new ResizeObserver(place).observe(document.body);
+var k=0,iv=setInterval(function(){unhide();place();if(++k>20)clearInterval(iv)},500);return true}
 var n=0;(function t(){if(!go()&&++n<80)setTimeout(t,250)})();
 })();
