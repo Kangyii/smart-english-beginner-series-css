@@ -1240,25 +1240,23 @@ boucle();
 })();
 /*                FIN HERO ACCUEIL PRÉNOM                */
 
-;/* ===== EARLY ACCESS : SCORM episode 5 completed + 9 min mini (header M2 + barre mobile en bas) ===== */
+;/* ===== EARLY ACCESS : SCORM episode 5 completed + 9 min mini, ou compte VIP (header M2 + barre mobile en bas) ===== */
 (function(){
-var URL_EA='https://www.smartenglish.fr/fin-essai-gratuit/',KEY='senD84378',CK='seea_ep5';
+var URL_EA='https://www.smartenglish.fr/fin-essai-gratuit/',VIP=['tgb33@mailo.com'],EP5ID='5013539',EP5='/formation/formation/84378/?idmodule=897263&idpage='+EP5ID,MIN=540;
 try{var qs=location.search;if(/[?&]seea=1/.test(qs))sessionStorage.setItem('seea_f','1');if(/[?&]seea=0/.test(qs))sessionStorage.removeItem('seea_f')}catch(e){}
 function forced(){try{return sessionStorage.getItem('seea_f')==='1'}catch(e){return false}}
-function data(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
-var EP5='/formation/formation/84378/?idmodule=897263&idpage=5013539',MIN=540;
 function secs(t){if(!t)return 0;var m=/^P(?:\d+D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:([\d.]+)S)?$/.exec(t);if(m)return (+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0);var p=t.split(':');return p.length==3?(+p[0])*3600+(+p[1])*60+parseFloat(p[2]):0}
-function cached(){try{if(localStorage.getItem('seea_ok')==='1')return true;var c=JSON.parse(sessionStorage.getItem(CK));if(c&&Date.now()-c.t<300000)return c.v}catch(e){}return null}
-var checking=false,ep5=null;
-function check(){if(checking)return;var k=cached();if(k!==null){ep5=k;return}checking=true;
-fetch(EP5,{credentials:'same-origin'}).then(function(r){return r.text()}).then(function(t){var u=t.match(/https:\/\/[^"' ]*\/upload\/scorm-[^"' ]+\.html/);if(!u)throw 0;return fetch(u[0]).then(function(r){return r.text()})}).then(function(x){
-function g(k){var q=x.match(new RegExp("cache\\['"+k+"'\\]\\s*=\\s*'([^']*)'"));return q?q[1]:''}
-var st=g('cmi.completion_status')||g('cmi.core.lesson_status'),tt=g('cmi.total_time')||g('cmi.core.total_time');
-ep5=(st==='completed'||st==='passed')&&secs(tt)>=MIN;try{if(ep5)localStorage.setItem('seea_ok','1');sessionStorage.setItem(CK,JSON.stringify({v:ep5,t:Date.now()}))}catch(e){}go()}).catch(function(){ep5=false})}
-var VIP=['tgb33@mailo.com'],vip=null;
-(function(){try{var e=sessionStorage.getItem('seea_em');if(e!==null){vip=VIP.indexOf(e)>-1;return}}catch(x){}
-fetch('/formation/profil/',{credentials:'include'}).then(function(r){return r.text()}).then(function(h){var i=new DOMParser().parseFromString(h,'text/html').querySelector('input[name="email"]');var e=i&&i.value?i.value.trim().toLowerCase():'';try{sessionStorage.setItem('seea_em',e)}catch(x){}vip=VIP.indexOf(e)>-1;if(vip)go()}).catch(function(){vip=false})})();
-function state(){if(forced()||vip===true)return {done:true};if(data().acc===true)return {done:false};if(ep5===null)check();return {done:ep5===true}}
+function scormDone(x){function g(k){var q=x.match(new RegExp("cache\\['"+k+"'\\]\\s*=\\s*'([^']*)'"));return q?q[1]:''}
+var st=g('cmi.completion_status')||g('cmi.core.lesson_status'),tt=g('cmi.total_time')||g('cmi.core.total_time');return (st==='completed'||st==='passed')&&secs(tt)>=MIN}
+var ok=false,em='';
+function save(v){ok=v;try{var k='seea_'+em;if(v)localStorage.setItem(k,'1');else sessionStorage.setItem(k,String(Date.now()))}catch(e){}if(v)go()}
+function wrapper(u){return fetch(u).then(function(r){return r.text()}).then(function(x){save(scormDone(x))})}
+function check(){var k='seea_'+em;try{if(localStorage.getItem(k)==='1'){ok=true;go();return}var t=+sessionStorage.getItem(k);if(t&&Date.now()-t<300000)return}catch(e){}
+var f=document.querySelector('.formationscorm iframe');
+if(f){if(new RegExp('[?&]idpage='+EP5ID+'(&|$)').test(location.search)&&/\/upload\/scorm-/.test(f.src))wrapper(f.src).catch(function(){});return}
+fetch(EP5,{credentials:'same-origin'}).then(function(r){return r.text()}).then(function(t){var u=t.match(/https:\/\/[^"' ]*\/upload\/scorm-[^"' ]+\.html/);if(u)return wrapper(u[0])}).catch(function(){})}
+fetch('/formation/profil/',{credentials:'include'}).then(function(r){return r.text()}).then(function(h){var i=new DOMParser().parseFromString(h,'text/html').querySelector('input[name="email"]');em=i&&i.value?i.value.trim().toLowerCase():'';if(!em)return;if(VIP.indexOf(em)>-1){ok=true;go()}else check()}).catch(function(){});
+function state(){return {done:forced()||ok}}
 var LOCK='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>',
 ARR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
 CHK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>';
