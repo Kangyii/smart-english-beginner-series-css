@@ -1280,7 +1280,7 @@ var HCSS='.sen-hero.seea-on video{display:none!important}.sen-hero.seea-on{min-h
 '.seea-hv iframe{position:absolute;inset:0;width:100%;height:100%;border:0}'+
 '@media(max-width:768px){.seea-hg{grid-template-columns:1fr;grid-template-areas:"m" "t" "v" "p" "b";padding:8px 0 4px}.seea-hv{margin:4px 0 18px;border-radius:14px}.seea-h .b a{width:100%;justify-content:center}}';
 var HHTML='<div class="seea-hg"><div class="m"><b>Beginner Series</b>4 saisons · Early Access</div><h1>Beginner<br>Series</h1>'+
-'<p>Bravo, tu as terminé la mini-série ! L’aventure de Nicolas à Londres ne fait que commencer : 4 saisons pour passer de tes premiers mots à tes premières conversations en anglais.</p>'+
+'<p>Bravo, tu as terminé la mini-série !<br>L’aventure de Nicolas à Londres ne fait que commencer : 4 saisons pour passer de tes premiers mots à tes premières conversations en anglais.</p>'+
 '<div class="b"><a href="'+URL_EA+'">'+LOCK+' Débloque la suite de l’aventure</a></div>'+
 '<div class="seea-hv"><iframe src="'+TRL+'" allow="autoplay; fullscreen; picture-in-picture" title="Bande-annonce Beginner Series"></iframe></div></div>';
 var CF='https://da32ev14kd4yl.cloudfront.net/versioned/smart-english/Landing%20Pages/5%20Jours%20Pour%20Pr%C3%A9parer%20ton%20Anglais%20avec%20Nicolas/chrome_';
