@@ -1267,11 +1267,12 @@ var CSS='@media(min-width:769px){.se-navbar-inner:has(.nav-serie-bloc.seea-on) .
 '.seea-b span{display:flex;flex-direction:column}.seea-b b{font-size:15px;font-weight:800}.seea-b small{font-size:11px;color:#9A4A1E;font-weight:700}'+
 '#seea-m{display:none}@media(max-width:768px){#seea-m{display:flex;flex-direction:column;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:9990;background:#fff;border-top:2px solid #FFE1CF;padding:12px 16px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(122,42,6,.08);font-family:inherit}'+
 '#seea-m .r{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#7A2A06}#seea-m .r b{display:flex;align-items:center;gap:4px;color:#FF721F}#seea-m .k{height:7px;border-radius:7px;background:#FF721F}'+
-'#seea-m .seea-b{justify-content:space-between;border:2px solid #FFE1CF}#seea-m .seea-b span{flex:1}body.seea-pad{padding-bottom:210px!important}}';
+'#seea-m .seea-b{justify-content:space-between;border:2px solid #FFE1CF}#seea-m .seea-b span{flex:1}body.seea-pad{padding-bottom:210px!important}}'+
+'@media(max-width:768px){#seea-m{flex-direction:row!important;align-items:center;gap:12px!important;padding:10px 14px 30px!important;border-top:1px solid #FFE1CF!important;box-shadow:0 -4px 14px rgba(122,42,6,.07)!important}#seea-m .k{display:none}#seea-m .r{flex-direction:column;justify-content:center;gap:2px;font-size:12px;white-space:nowrap}#seea-m .r b{font-size:13px}#seea-m .seea-b{flex:1;min-width:0;padding:8px 12px}#seea-m .seea-b b{font-size:14px}#seea-m .seea-b small{font-size:10.5px}body.seea-pad{padding-bottom:150px!important}}.seea-b b{font-family:\'Bricolage Grotesque\',sans-serif}';
 function go(){if(!state().done)return false;if(!document.getElementById('seea-css')){var st=document.createElement('style');st.id='seea-css';st.textContent=CSS;document.head.appendChild(st)}
 var bl=document.querySelector('.nav-serie-bloc');if(bl&&!bl.querySelector('.seea')){var d=document.createElement('div');d.className='seea';d.innerHTML='<div class="seea-t"><span>Mini-série</span><b>'+CHK+'Terminée</b></div>'+BTN;bl.appendChild(d);bl.classList.add('seea-on')}
-if(!document.getElementById('seea-m')){var m=document.createElement('div');m.id='seea-m';m.innerHTML='<div class="r"><span>Mini-série</span><b>'+CHK+'100%</b></div><div class="k"></div>'+BTN;document.body.appendChild(m);document.body.classList.add('seea-pad')}
-var tb=document.getElementById('se-tabbar'),mm=document.getElementById('seea-m');if(mm)mm.style.bottom=(tb&&tb.offsetHeight?tb.offsetHeight+12:0)+'px';
+if(!document.getElementById('seea-m')){var m=document.createElement('div');m.id='seea-m';m.innerHTML='<div class="r"><span>Mini-série</span><b>'+CHK+'Termin\u00e9e</b></div><div class="k"></div>'+BTN;document.body.appendChild(m);document.body.classList.add('seea-pad')}
+var tb=document.getElementById('se-tabbar'),mm=document.getElementById('seea-m');if(mm)mm.style.bottom=(tb&&tb.offsetHeight?tb.offsetHeight-2:0)+'px';
 return true}
 var n=0;(function t(){go();if(++n<20)setTimeout(t,500)})();
 })();
