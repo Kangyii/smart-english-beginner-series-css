@@ -1242,7 +1242,7 @@ boucle();
 
 ;/* ===== EARLY ACCESS : SCORM episode 5 completed + 9 min mini, ou compte VIP (header M2 + barre mobile en bas) ===== */
 (function(){
-var URL_EA='https://www.smartenglish.fr/fin-essai-gratuit/',VIP=['tgb33@mailo.com'],EP5ID='5013539',EP5='/formation/formation/84378/?idmodule=897263&idpage='+EP5ID,MIN=540;
+var URL_EA='https://www.smartenglish.fr/beginner-series-early-access/',VIP=['tgb33@mailo.com'],EP5ID='5013539',EP5='/formation/formation/84378/?idmodule=897263&idpage='+EP5ID,MIN=540;
 try{var qs=location.search;if(/[?&]seea=1/.test(qs))sessionStorage.setItem('seea_f','1');if(/[?&]seea=0/.test(qs))sessionStorage.removeItem('seea_f')}catch(e){}
 function forced(){try{return sessionStorage.getItem('seea_f')==='1'}catch(e){return false}}
 function secs(t){if(!t)return 0;var m=/^P(?:\d+D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:([\d.]+)S)?$/.exec(t);if(m)return (+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0);var p=t.split(':');return p.length==3?(+p[0])*3600+(+p[1])*60+parseFloat(p[2]):0}
