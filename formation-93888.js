@@ -1244,7 +1244,7 @@ var CSS='body:has(#sep-head) #formation{overflow:visible!important}body:has(#sep
 '#sep-car .tr>a.c .t{font-size:15px!important;font-weight:800!important;line-height:1.3!important;color:#fff!important}'+
 'body:has(#sep-head) .s2-stage>#sep-car{position:absolute!important;left:0;right:0;bottom:0;margin:0!important;z-index:9;padding:90px 48px 86px!important;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.78) 60%)!important;pointer-events:none;transition:opacity .35s}'+
 '.s2-stage>#sep-car .sea-h2,.s2-stage>#sep-car .tr{pointer-events:auto;max-width:1100px}.s2-stage>#sep-car .tr{gap:14px!important}.s2-stage>#sep-car .tr>a.c .t{font-size:14px!important}'+
-'.s2-stage.sea-run>#sep-car{opacity:0;pointer-events:none}.s2-stage.sea-run>#sep-car *{pointer-events:none!important}'+
+'body:has(#sep-head) .s2 .s2-bar{z-index:10!important}.s2-stage.sea-run>#sep-car{opacity:0;pointer-events:none}.s2-stage.sea-run>#sep-car *{pointer-events:none!important}'+
 '@media(max-width:991px){#sep-car .tr{display:flex!important;flex-direction:row!important;gap:12px!important;overflow-x:auto!important;scroll-snap-type:x mandatory;padding-bottom:4px!important;scrollbar-width:none}#sep-car .tr::-webkit-scrollbar{display:none}#sep-car .tr>a.c{flex:0 0 62%!important;scroll-snap-align:start}body:has(#sep-head) .sequence .s2{margin-top:0!important}#sep-car{margin-top:18px!important}#sep-head{margin-top:32px!important;padding:16px!important}.sea-desc{font-size:14px}}';
 function q(s,r){return(r||document).querySelector(s)}
 var band=null;
