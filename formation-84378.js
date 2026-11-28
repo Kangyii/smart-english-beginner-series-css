@@ -1261,3 +1261,35 @@ var LOCK='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 ARR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
 CHK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>';
 var BTN='<a class="seea-b" href="'+URL_EA+'">'+LOCK+'<span><b>Débloque la suite</b><small>Saisons 1 à 4 · Early Access</small></span>'+ARR+'</a>';
+
+var CSS='@media(min-width:769px){.se-navbar-inner:has(.nav-serie-bloc.seea-on) .se-nav{left:calc(50% - 60px)!important}.nav-serie-bloc.seea-on>*:not(.seea){display:none!important}.nav-serie-bloc.seea-on{display:flex!important;align-items:center}}@media(max-width:768px){.nav-serie-bloc>.seea{display:none!important}}'+
+'.seea{display:flex;align-items:center;gap:14px;margin-left:18px}.seea-t{display:flex;flex-direction:column;gap:2px;color:#fff;font-size:13px;line-height:1.2;font-weight:700;white-space:nowrap}.seea-t b{display:flex;align-items:center;gap:4px;font-weight:800}'+
+'.seea-b{display:flex!important;align-items:center;gap:10px;background:#fff;color:#FF721F!important;text-decoration:none!important;border-radius:12px;padding:7px 14px;font-weight:800;line-height:1.15;white-space:nowrap;transition:transform .15s,box-shadow .15s}.seea-b:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(122,42,6,.18)}'+
+'.seea-b span{display:flex;flex-direction:column}.seea-b b{font-size:15px;font-weight:800}.seea-b small{font-size:11px;color:#9A4A1E;font-weight:700}'+
+'#seea-m{display:none}@media(max-width:768px){#seea-m{display:flex;flex-direction:column;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:9990;background:#fff;border-top:2px solid #FFE1CF;padding:12px 16px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(122,42,6,.08);font-family:inherit}'+
+'#seea-m .r{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#7A2A06}#seea-m .r b{display:flex;align-items:center;gap:4px;color:#FF721F}#seea-m .k{height:7px;border-radius:7px;background:#FF721F}'+
+'#seea-m .seea-b{justify-content:space-between;border:2px solid #FFE1CF}#seea-m .seea-b span{flex:1}body.seea-pad{padding-bottom:210px!important}}'+
+'@media(max-width:768px){#seea-m{flex-direction:row!important;align-items:center;gap:12px!important;padding:10px 14px 30px!important;border-top:1px solid #FFE1CF!important;box-shadow:0 -4px 14px rgba(122,42,6,.07)!important}#seea-m .k{display:none}#seea-m .r{flex-direction:column;justify-content:center;gap:2px;font-size:12px;white-space:nowrap}#seea-m .r b{font-size:13px}#seea-m .seea-b{flex:1;min-width:0;padding:8px 12px}#seea-m .seea-b b{font-size:14px}#seea-m .seea-b small{font-size:10.5px}body.seea-pad{padding-bottom:150px!important}}.seea-b b{font-family:\'Bricolage Grotesque\',sans-serif}';
+var TRL='https://player.vimeo.com/video/1239784201?background=1&autoplay=1&muted=1&loop=1&autopause=0';
+var HCSS='.sen-hero.seea-on video{display:none!important}.sen-hero.seea-on{min-height:0!important;height:auto!important}.seea-h{width:100%}'+
+'.seea-hg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"m v" "t v" "p v" "b v";column-gap:48px;align-items:center;padding:24px 0 48px}'+
+'.seea-h .m{grid-area:m;margin:0 0 10px}.seea-h h1{grid-area:t;margin:0 0 14px}.seea-h p{grid-area:p;margin:0 0 22px}.seea-h .b{grid-area:b}'+
+'.seea-hv{grid-area:v;position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#7A2A06;box-shadow:0 18px 40px rgba(122,42,6,.28);border:3px solid rgba(255,255,255,.85)}'+
+'.seea-hv iframe{position:absolute;inset:0;width:100%;height:100%;border:0}'+
+'@media(max-width:768px){.seea-hg{grid-template-columns:1fr;grid-template-areas:"m" "t" "v" "p" "b";padding:8px 0 4px}.seea-hv{margin:4px 0 18px;border-radius:14px}.seea-h .b a{width:100%;justify-content:center}}';
+var HHTML='<div class="seea-hg"><div class="m"><b>Beginner Series</b>4 saisons · Early Access</div><h1>Beginner<br>Series</h1>'+
+'<p>Bravo, tu as terminé la mini-série ! L’aventure de Nicolas à Londres ne fait que commencer : 4 saisons pour passer de tes premiers mots à tes premières conversations en anglais.</p>'+
+'<div class="b"><a href="'+URL_EA+'">'+LOCK+' Débloque la suite de l’aventure</a></div>'+
+'<div class="seea-hv"><iframe src="'+TRL+'" allow="autoplay; fullscreen; picture-in-picture" title="Bande-annonce Beginner Series"></iframe></div></div>';
+function home(){if(!document.body.classList.contains('home'))return;var hero=document.querySelector('#sed-root .sen-hero'),hi=hero&&hero.querySelector('.sen-hi');if(!hi)return;
+if(!document.getElementById('seea-hcss')){var s=document.createElement('style');s.id='seea-hcss';s.textContent=HCSS;document.head.appendChild(s)}
+if(!hi.classList.contains('seea-h')){hi.className='sen-hi seea-h';hi.innerHTML=HHTML;hero.classList.add('seea-on')}
+var mn=document.querySelector('#sed-root .sen-main'),sa=document.getElementById('sen-saisons');if(mn&&sa&&mn.firstElementChild!==sa)mn.insertBefore(sa,mn.firstElementChild)}
+var hob=null;function homeWatch(){home();if(hob||!document.body.classList.contains('home'))return;hob=new MutationObserver(function(){hob.disconnect();home();hob.observe(document.body,{childList:true,subtree:true})});hob.observe(document.body,{childList:true,subtree:true});setTimeout(function(){if(hob)hob.disconnect()},30000)}
+function go(){if(!state().done)return false;homeWatch();if(!document.getElementById('seea-css')){var st=document.createElement('style');st.id='seea-css';st.textContent=CSS;document.head.appendChild(st)}
+var bl=document.querySelector('.nav-serie-bloc');if(bl&&!bl.querySelector('.seea')){var d=document.createElement('div');d.className='seea';d.innerHTML='<div class="seea-t"><span>Mini-série</span><b>'+CHK+'Terminée</b></div>'+BTN;bl.appendChild(d);bl.classList.add('seea-on')}
+if(!document.getElementById('seea-m')){var m=document.createElement('div');m.id='seea-m';m.innerHTML='<div class="r"><span>Mini-série</span><b>'+CHK+'Termin\u00e9e</b></div><div class="k"></div>'+BTN;document.body.appendChild(m);document.body.classList.add('seea-pad')}
+var tb=document.getElementById('se-tabbar'),mm=document.getElementById('seea-m');if(mm)mm.style.bottom=(tb&&tb.offsetHeight?tb.offsetHeight-2:0)+'px';
+return true}
+var n=0;(function t(){go();if(++n<20)setTimeout(t,500)})();
+})();
