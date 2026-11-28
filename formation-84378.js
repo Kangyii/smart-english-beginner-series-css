@@ -1257,7 +1257,8 @@ function check(){var k='seea_'+em;try{if(localStorage.getItem(k)==='1'){ok=true;
 var f=document.querySelector('.formationscorm iframe');
 if(f){if(new RegExp('[?&]idpage='+EP5ID+'(&|$)').test(location.search)&&/\/upload\/scorm-/.test(f.src))wrapper(f.src).catch(function(){});return}
 fetch(EP5,{credentials:'same-origin'}).then(function(r){return r.text()}).then(function(t){var u=t.match(/https:\/\/[^"' ]*\/upload\/scorm-[^"' ]+\.html/);if(u)return wrapper(u[0])}).catch(function(){})}
-fetch('/formation/profil/',{credentials:'include'}).then(function(r){return r.text()}).then(function(h){var i=new DOMParser().parseFromString(h,'text/html').querySelector('input[name="email"]');em=i&&i.value?i.value.trim().toLowerCase():'';if(!em)return;if(VIP.indexOf(em)>-1){ok=true;hint(true);go()}else{var c;try{c=localStorage.getItem('seea_'+em)}catch(e){}if(hint()&&c!=='1'){hint(false);location.reload();return}check()}}).catch(function(){});
+var PRE='';function pre(){[].forEach.call(document.querySelectorAll('.seea-pa'),function(s){s.textContent='Poursuis l\u2019aventure'+(PRE?' '+PRE:'')})}
+fetch('/formation/profil/',{credentials:'include'}).then(function(r){return r.text()}).then(function(h){var i=new DOMParser().parseFromString(h,'text/html').querySelector('input[name="email"]');em=i&&i.value?i.value.trim().toLowerCase():'';var fn=new DOMParser().parseFromString(h,'text/html').querySelector('input[name="fname"]'),pf=fn&&fn.value?fn.value.trim().split(/\s+/)[0]:'';PRE=pf?pf.charAt(0).toUpperCase()+pf.slice(1):'';pre();if(!em)return;if(VIP.indexOf(em)>-1){ok=true;hint(true);go()}else{var c;try{c=localStorage.getItem('seea_'+em)}catch(e){}if(hint()&&c!=='1'){hint(false);location.reload();return}check()}}).catch(function(){});
 function state(){return {done:forced()||ok}}
 var LOCK='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>',
 ARR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
@@ -1274,12 +1275,12 @@ var CSS='@media(min-width:769px){.se-navbar-inner:has(.nav-serie-bloc.seea-on) .
 '@media(max-width:768px){#seea-m{flex-direction:row!important;align-items:center;gap:12px!important;padding:10px 14px 30px!important;border-top:1px solid #FFE1CF!important;box-shadow:0 -4px 14px rgba(122,42,6,.07)!important}#seea-m .k{display:none}#seea-m .r{flex-direction:column;justify-content:center;gap:2px;font-size:12px;white-space:nowrap}#seea-m .r b{font-size:13px}#seea-m .seea-b{flex:1;min-width:0;padding:8px 12px}#seea-m .seea-b b{font-size:14px}#seea-m .seea-b small{font-size:10.5px}body.seea-pad{padding-bottom:150px!important}}.seea-b b{font-family:\'Bricolage Grotesque\',sans-serif}';
 var TRL='https://player.vimeo.com/video/1239784201?background=1&autoplay=1&muted=1&loop=1&autopause=0';
 var HCSS='.sen-hero.seea-on video{display:none!important}.sen-hero.seea-on{min-height:0!important;height:auto!important}.seea-h{width:100%}'+
-'.seea-hg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"m v" "t v" "p v" "b v";column-gap:48px;align-items:center;padding:24px 0 48px}'+
-'.seea-h .m{grid-area:m;margin:0 0 10px}.seea-h h1{grid-area:t;margin:0 0 14px}.seea-h p{grid-area:p;margin:0 0 22px}.seea-h .b{grid-area:b}'+
+'.seea-hg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"k v" "m v" "t v" "p v" "b v";column-gap:48px;align-items:center;padding:24px 0 48px}'+
+'.seea-pa{grid-area:k;display:block;color:#fff;font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:0 0 12px}.seea-h .m{grid-area:m;margin:0 0 10px}.seea-h h1{grid-area:t;margin:0 0 14px}.seea-h p{grid-area:p;margin:0 0 22px}.seea-h .b{grid-area:b}'+
 '.seea-hv{grid-area:v;position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#7A2A06;box-shadow:0 18px 40px rgba(122,42,6,.28);border:3px solid rgba(255,255,255,.85)}'+
 '.seea-hv iframe{position:absolute;inset:0;width:100%;height:100%;border:0}'+
-'@media(max-width:768px){.seea-hg{grid-template-columns:1fr;grid-template-areas:"m" "t" "v" "p" "b";padding:8px 0 4px}.seea-hv{margin:4px 0 18px;border-radius:14px}.seea-h .b a{width:100%;justify-content:center}}';
-var HHTML='<div class="seea-hg"><div class="m"><b>Beginner Series</b>4 saisons · Early Access</div><h1>Beginner<br>Series</h1>'+
+'@media(max-width:768px){.seea-hg{grid-template-columns:1fr;grid-template-areas:"k" "m" "t" "v" "p" "b";padding:8px 0 4px}.seea-hv{margin:4px 0 18px;border-radius:14px}.seea-h .b a{width:100%;justify-content:center}}';
+var HHTML='<div class="seea-hg"><span class="seea-pa">Poursuis l\u2019aventure</span><div class="m"><b>Beginner Series</b>4 saisons · Early Access</div><h1>Beginner<br>Series</h1>'+
 '<p>Bravo, tu as terminé la mini-série !<br>L’aventure de Nicolas à Londres ne fait que commencer : 4 saisons pour passer de tes premiers mots à tes premières conversations en anglais.</p>'+
 '<div class="b"><a href="'+URL_EA+'">'+LOCK+' Débloque la suite de l’aventure</a></div>'+
 '<div class="seea-hv"><iframe src="'+TRL+'" allow="autoplay; fullscreen; picture-in-picture" title="Bande-annonce Beginner Series"></iframe></div></div>';
@@ -1291,7 +1292,7 @@ EPS.forEach(function(e,i){h+='<a class="sen-ep d" href="/formation/formation/843
 var s=document.createElement('section');s.className='sen-box';s.id='seea-mini';s.innerHTML=h+'</div>';return s}
 function home(){if(!document.body.classList.contains('home'))return;var hero=document.querySelector('#sed-root .sen-hero'),hi=hero&&hero.querySelector('.sen-hi');if(!hi)return;
 if(!document.getElementById('seea-hcss')){var s=document.createElement('style');s.id='seea-hcss';s.textContent=HCSS+MCSS;document.head.appendChild(s)}document.body.classList.add('seea-home');
-if(!hi.querySelector('.seea-hg')){hi.className='sen-hi seea-h';hi.innerHTML=HHTML;hero.classList.add('seea-on')}
+if(!hi.querySelector('.seea-hg')){hi.className='sen-hi seea-h';hi.innerHTML=HHTML;hero.classList.add('seea-on');pre()}
 var mn=document.querySelector('#sed-root .sen-main'),sa=document.getElementById('sen-saisons');if(mn&&sa&&mn.firstElementChild!==sa)mn.insertBefore(sa,mn.firstElementChild);
 if(mn){var sm=document.getElementById('seea-mini');if(!sm||sm.parentElement!==mn)mn.appendChild(sm||mini());else if(mn.lastElementChild!==sm)mn.appendChild(sm)}}
 var hob=null;function homeWatch(){home();if(hob||!document.body.classList.contains('home'))return;hob=new MutationObserver(function(){hob.disconnect();home();hob.observe(document.body,{childList:true,subtree:true})});hob.observe(document.body,{childList:true,subtree:true});setTimeout(function(){if(hob)hob.disconnect()},30000)}
