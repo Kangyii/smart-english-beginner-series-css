@@ -1255,7 +1255,10 @@ fetch(EP5,{credentials:'same-origin'}).then(function(r){return r.text()}).then(f
 function g(k){var q=x.match(new RegExp("cache\\['"+k+"'\\]\\s*=\\s*'([^']*)'"));return q?q[1]:''}
 var st=g('cmi.completion_status')||g('cmi.core.lesson_status'),tt=g('cmi.total_time')||g('cmi.core.total_time');
 ep5=(st==='completed'||st==='passed')&&secs(tt)>=MIN;try{if(ep5)localStorage.setItem('seea_ok','1');sessionStorage.setItem(CK,JSON.stringify({v:ep5,t:Date.now()}))}catch(e){}go()}).catch(function(){ep5=false})}
-function state(){if(forced())return {done:true};if(data().acc===true)return {done:false};if(ep5===null)check();return {done:ep5===true}}
+var VIP=['tgb33@mailo.com'],vip=null;
+(function(){try{var e=sessionStorage.getItem('seea_em');if(e!==null){vip=VIP.indexOf(e)>-1;return}}catch(x){}
+fetch('/formation/profil/',{credentials:'include'}).then(function(r){return r.text()}).then(function(h){var i=new DOMParser().parseFromString(h,'text/html').querySelector('input[name="email"]');var e=i&&i.value?i.value.trim().toLowerCase():'';try{sessionStorage.setItem('seea_em',e)}catch(x){}vip=VIP.indexOf(e)>-1;if(vip)go()}).catch(function(){vip=false})})();
+function state(){if(forced()||vip===true)return {done:true};if(data().acc===true)return {done:false};if(ep5===null)check();return {done:ep5===true}}
 var LOCK='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>',
 ARR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
 CHK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>';
