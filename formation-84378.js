@@ -1304,5 +1304,6 @@ return true}
 var SCSS='@media(max-width:768px){#seea-m{transform:translateY(calc(100% + 90px));transition:transform .3s ease}#seea-m.seea-vis{transform:none}.nav-serie-bloc.seea-on>*:not(.seea){display:none!important}.nav-serie-bloc.seea-on>.seea{display:flex!important;margin-left:0}.nav-serie-bloc.seea-on .seea-b{display:none!important}}';
 function sc(){var m=document.getElementById('seea-m');if(!m)return;if(!document.getElementById('seea-scss')){var s=document.createElement('style');s.id='seea-scss';s.textContent=SCSS;document.head.appendChild(s)}m.classList.toggle('seea-vis',(window.scrollY||document.documentElement.scrollTop||0)>160)}
 window.addEventListener('scroll',sc,{passive:true});
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('.seea-b,.seea-h .b a');if(!a||!a.href)return;e.stopPropagation();e.preventDefault();if(e.ctrlKey||e.metaKey||e.button===1)window.open(a.href,'_blank');else location.href=a.href},true);
 var n=0;(function t(){go();sc();if(++n<20)setTimeout(t,500)})();
 })();
