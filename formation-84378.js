@@ -1248,14 +1248,16 @@ function forced(){try{return sessionStorage.getItem('seea_f')==='1'}catch(e){ret
 function secs(t){if(!t)return 0;var m=/^P(?:\d+D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:([\d.]+)S)?$/.exec(t);if(m)return (+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0);var p=t.split(':');return p.length==3?(+p[0])*3600+(+p[1])*60+parseFloat(p[2]):0}
 function scormDone(x){function g(k){var q=x.match(new RegExp("cache\\['"+k+"'\\]\\s*=\\s*'([^']*)'"));return q?q[1]:''}
 var st=g('cmi.completion_status')||g('cmi.core.lesson_status'),tt=g('cmi.total_time')||g('cmi.core.total_time');return (st==='completed'||st==='passed')&&secs(tt)>=MIN}
-var ok=false,em='';
-function save(v){ok=v;try{var k='seea_'+em;if(v)localStorage.setItem(k,'1');else sessionStorage.setItem(k,String(Date.now()))}catch(e){}if(v)go()}
+var ok=false,em='',HINT='seea_hint';
+function hint(v){try{if(v===undefined)return localStorage.getItem(HINT)==='1';if(v)localStorage.setItem(HINT,'1');else localStorage.removeItem(HINT)}catch(e){return false}}
+if(hint()){ok=true;try{var s0=document.createElement('style');s0.id='seea-pre';s0.textContent='.sen-hero .sen-hi:not(.seea-h){visibility:hidden!important}body.home #mini,body.home .sen-main>section:has(>.sen-bn){display:none!important}';document.head.appendChild(s0)}catch(e){}}
+function save(v){ok=v;hint(v);try{var k='seea_'+em;if(v)localStorage.setItem(k,'1');else sessionStorage.setItem(k,String(Date.now()))}catch(e){}if(v)go()}
 function wrapper(u){return fetch(u).then(function(r){return r.text()}).then(function(x){save(scormDone(x))})}
-function check(){var k='seea_'+em;try{if(localStorage.getItem(k)==='1'){ok=true;go();return}var t=+sessionStorage.getItem(k);if(t&&Date.now()-t<300000)return}catch(e){}
+function check(){var k='seea_'+em;try{if(localStorage.getItem(k)==='1'){ok=true;hint(true);go();return}var t=+sessionStorage.getItem(k);if(t&&Date.now()-t<300000)return}catch(e){}
 var f=document.querySelector('.formationscorm iframe');
 if(f){if(new RegExp('[?&]idpage='+EP5ID+'(&|$)').test(location.search)&&/\/upload\/scorm-/.test(f.src))wrapper(f.src).catch(function(){});return}
 fetch(EP5,{credentials:'same-origin'}).then(function(r){return r.text()}).then(function(t){var u=t.match(/https:\/\/[^"' ]*\/upload\/scorm-[^"' ]+\.html/);if(u)return wrapper(u[0])}).catch(function(){})}
-fetch('/formation/profil/',{credentials:'include'}).then(function(r){return r.text()}).then(function(h){var i=new DOMParser().parseFromString(h,'text/html').querySelector('input[name="email"]');em=i&&i.value?i.value.trim().toLowerCase():'';if(!em)return;if(VIP.indexOf(em)>-1){ok=true;go()}else check()}).catch(function(){});
+fetch('/formation/profil/',{credentials:'include'}).then(function(r){return r.text()}).then(function(h){var i=new DOMParser().parseFromString(h,'text/html').querySelector('input[name="email"]');em=i&&i.value?i.value.trim().toLowerCase():'';if(!em)return;if(VIP.indexOf(em)>-1){ok=true;hint(true);go()}else{var c;try{c=localStorage.getItem('seea_'+em)}catch(e){}if(hint()&&c!=='1'){hint(false);location.reload();return}check()}}).catch(function(){});
 function state(){return {done:forced()||ok}}
 var LOCK='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>',
 ARR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
