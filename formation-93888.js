@@ -1226,7 +1226,7 @@ var CSS='body:has(#sep-head) [class*=col-]:has(> .sequence){width:100%!important
 '#sea-cine b{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(20,10,5,.15),rgba(20,10,5,.85) 75%),linear-gradient(rgba(20,10,5,0) 70%,rgba(20,10,5,.9))}'+
 '#sea-nav,#sea-tabs{display:none!important}'+
 '#sep-head{grid-row:3;margin:56px 0 0!important;padding:20px 24px!important;background:#fff;border:1px solid #FFE1CF;border-radius:16px;box-shadow:0 8px 26px rgba(122,42,6,.06)}'+
-'body:has(#sep-head) #sep-about{grid-row:4!important;margin:28px 0 0!important}'+
+'body:has(#sep-head) #sep-about{grid-row:4!important;margin:28px 0 0!important;box-sizing:border-box!important;min-width:0!important;max-width:100%!important;width:auto!important}'+
 'body:has(#sep-head) #sep-car{grid-column:1!important;grid-row:5!important;position:static!important;padding:0!important;border:0!important;box-shadow:none!important;background:none!important;margin:36px 0 0!important}'+
 'body:has(#sep-head) .sequence .sea-com{grid-row:6!important;margin-top:36px!important}'+
 '#sep-car.sea-hide,#sep-about.sea-hide,.sea-com.sea-hide{display:block!important}'+
