@@ -1218,6 +1218,8 @@ var n=0;(function t(){go();if(++n<30)setTimeout(t,500)})();
 
 ;/* ===== TEST : page episode facon ADN v4 (bande cinema sombre, lecteur pleine hauteur, vignettes episodes dans la bande, descriptif dans la carte) ===== */
 (function(){
+function unmejs(){[].forEach.call(document.querySelectorAll('.s2-stage .mejs__container'),function(c){var st=c.closest('.s2-stage'),v=c.querySelector('video');if(v&&st){st.insertBefore(v,st.firstChild);v.removeAttribute('id');v.controls=false;['controls','style','width','height'].forEach(function(a){v.removeAttribute(a)});try{for(var k in window.mejs.players)if(mejs.players[k].node===v)delete mejs.players[k]}catch(e){}}c.remove()});[].forEach.call(document.querySelectorAll('.s2-stage>.mejs__offscreen'),function(e){e.remove()})}
+unmejs();if(window.MutationObserver)new MutationObserver(function(ms){for(var i=0;i<ms.length;i++)for(var j=0;j<ms[i].addedNodes.length;j++){var n=ms[i].addedNodes[j];if(n.nodeType===1&&(n.classList.contains('mejs__container')||n.classList.contains('mejs__offscreen'))){unmejs();return}}}).observe(document.documentElement,{childList:true,subtree:true});
 var CSS='body:has(#sep-head) #formation{overflow:visible!important}body:has(#sep-head) [class*=col-]:has(> .sequence){width:100%!important;max-width:100%!important;flex:0 0 100%!important}body:has(#sep-head) .sequence{grid-template-columns:minmax(0,1fr)!important;column-gap:0!important}'+
 'body:has(#sep-head) .sequence .s2{position:relative;z-index:2;max-width:none!important;width:100%;margin:0!important;justify-self:start}'+
 'body:has(#sep-head) .sequence .s2 .s2-stage{box-shadow:none!important}'+
