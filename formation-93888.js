@@ -1246,7 +1246,7 @@ function q(s,r){return(r||document).querySelector(s)}
 var band=null;
 function place(){var s2=q('.sequence .s2'),car=q('#sep-car');if(!s2||!band)return;var y=scrollY||document.documentElement.scrollTop||0,vw=document.documentElement.clientWidth,mob=vw<992;
 var h=q('.line:has(.se-navbar-inner)'),hb=h?h.getBoundingClientRect().bottom+y:0;
-var sq=q('.sequence'),pl=sq?sq.getBoundingClientRect().left:0,t0=s2.getBoundingClientRect().top+y,hh=h?h.getBoundingClientRect().height:0,w=mob?vw:Math.min(vw,Math.round((innerHeight-hh-Math.max(0,t0-hb)-18)*16/9));
+var sq=q('.sequence'),pl=sq?sq.getBoundingClientRect().left:0,t0=s2.getBoundingClientRect().top+y,hh=h?h.getBoundingClientRect().height:0,ch=car?car.getBoundingClientRect().height:0,w=mob?vw:Math.min(vw,Math.max(480,Math.round((innerHeight-hh-Math.max(0,t0-hb)-ch-26-22)*16/9)));
 s2.style.setProperty('width',w+'px','important');s2.style.setProperty('margin-left',Math.round((vw-w)/2-pl)+'px','important');
 var r=s2.getBoundingClientRect(),top=Math.max(hb,r.top+y-(mob?0:16)),cb=car?car.getBoundingClientRect().bottom+y:r.bottom+y,pad=mob?22:40;
 band.style.top=top+'px';band.style.height=(cb+pad-top)+'px'}
