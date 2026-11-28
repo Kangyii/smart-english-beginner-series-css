@@ -1291,5 +1291,8 @@ var bl=document.querySelector('.nav-serie-bloc');if(bl&&!bl.querySelector('.seea
 if(!document.getElementById('seea-m')){var m=document.createElement('div');m.id='seea-m';m.innerHTML='<div class="r"><span>Mini-série</span><b>'+CHK+'Termin\u00e9e</b></div><div class="k"></div>'+BTN;document.body.appendChild(m);document.body.classList.add('seea-pad')}
 var tb=document.getElementById('se-tabbar'),mm=document.getElementById('seea-m');if(mm)mm.style.bottom=(tb&&tb.offsetHeight?tb.offsetHeight-2:0)+'px';
 return true}
-var n=0;(function t(){go();if(++n<20)setTimeout(t,500)})();
+var SCSS='@media(max-width:768px){#seea-m{transform:translateY(calc(100% + 90px));transition:transform .3s ease}#seea-m.seea-vis{transform:none}}';
+function sc(){var m=document.getElementById('seea-m');if(!m)return;if(!document.getElementById('seea-scss')){var s=document.createElement('style');s.id='seea-scss';s.textContent=SCSS;document.head.appendChild(s)}m.classList.toggle('seea-vis',(window.scrollY||document.documentElement.scrollTop||0)>160)}
+window.addEventListener('scroll',sc,{passive:true});
+var n=0;(function t(){go();sc();if(++n<20)setTimeout(t,500)})();
 })();
