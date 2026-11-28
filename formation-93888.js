@@ -1215,3 +1215,33 @@ function go(){if(!document.querySelector('.s2'))return false;if(!document.getEle
 [].forEach.call(document.querySelectorAll('.s2'),setup);return true}
 var n=0;(function t(){go();if(++n<30)setTimeout(t,500)})();
 })();
+
+;/* ===== TEST : page episode facon ADN v2 (lecteur pleine largeur dans une bande, carte infos, onglets Episodes / A propos / Commentaires, grille d'episodes) ===== */
+(function(){
+var CSS='@media(min-width:0px){body:has(#sep-head) .sequence{grid-template-columns:minmax(0,1fr)!important;column-gap:0!important}'+
+'body:has(#sep-head) .sequence .s2{position:relative;max-width:1080px!important;width:100%;margin:30px auto 0!important;justify-self:center;z-index:0}'+
+'body:has(#sep-head) .sequence .s2::before{content:"";position:absolute;left:-28px;right:-28px;top:-26px;bottom:-26px;border-radius:24px;background:linear-gradient(#FFF4EC,#FFE6D3);z-index:-1}'+
+'#sea-nav{display:none!important}'+
+'#sep-head{grid-row:3;margin:52px 0 0!important;padding:20px 24px!important;background:#fff;border:1px solid #FFE1CF;border-radius:16px;box-shadow:0 8px 26px rgba(122,42,6,.06)}'+
+'#sea-tabs{margin:26px 0 20px!important}#sea-tabs .m{display:block!important}'+
+'body:has(#sep-head) #sep-car{grid-column:1!important;grid-row:5!important;position:static!important;padding:0!important;border:0!important;box-shadow:none!important;background:none!important;margin:0!important}'+
+'#sep-car .hd,#sep-car .sea-next{display:none!important}'+
+'#sep-car .tr{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 18px!important;overflow:visible!important;transform:none!important;width:auto!important}'+
+'#sep-car .tr>a.c{display:block!important;padding:0!important;background:none!important;box-shadow:none!important;border-radius:0!important}'+
+'#sep-car .tr>a.c .th{display:block;position:relative;width:100%!important;height:auto!important;aspect-ratio:16/9;border-radius:12px!important;margin:0 0 9px!important;overflow:hidden;transition:transform .2s,box-shadow .2s}'+
+'#sep-car .tr>a.c:hover .th{transform:translateY(-2px);box-shadow:0 10px 24px rgba(122,42,6,.18)}'+
+'#sep-car .tr>a.c.cur .th{box-shadow:0 0 0 3px #FF721F}'+
+'#sep-car .tr>a.c.cur .th::after{content:"";position:absolute;inset:0;background:rgba(122,42,6,.45) url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath d=%27M8 5v14l11-7z%27 fill=%27%23fff%27/%3E%3C/svg%3E") center/38px no-repeat}'+
+'#sep-car .tr>a.c .m{font-size:12px!important;font-weight:800!important;color:#FF721F!important;margin:0 0 2px!important}'+
+'#sep-car .tr>a.c .t{font-size:15px!important;font-weight:800!important;line-height:1.3!important;color:#7A2A06!important}'+
+'}@media(max-width:991px){#sep-car .tr{grid-template-columns:repeat(2,minmax(0,1fr))}body:has(#sep-head) .sequence .s2::before{top:-12px;bottom:-12px;left:-12px;right:-12px;border-radius:18px}body:has(#sep-head) .sequence .s2{margin-top:14px!important}#sep-head{margin-top:30px!important;padding:16px!important}}';
+function q(s,r){return(r||document).querySelector(s)}
+function go(){var tb=q('#sea-tabs'),car=q('#sep-car'),ab=q('#sep-about');if(!tb||!car||!ab)return false;if(tb.dataset.v2)return true;
+if(!q('#sea2-css')){var st=document.createElement('style');st.id='sea2-css';st.textContent=CSS;document.head.appendChild(st)}
+var com=q('.sequence .sea-com');var nt=tb.cloneNode(true);nt.dataset.v2='1';tb.parentNode.replaceChild(nt,tb);
+var bE=q('[data-p=e]',nt),bA=q('[data-p=a]',nt);if(bE){bE.classList.remove('m');bE.textContent='Épisodes';nt.insertBefore(bE,nt.firstChild)}
+var pan={e:car,a:ab,c:com};
+function sh(k){[].forEach.call(nt.children,function(b){b.classList.toggle('on',b.dataset.p==k)});Object.keys(pan).forEach(function(x){if(pan[x])pan[x].classList.toggle('sea-hide',x!=k)})}
+nt.addEventListener('click',function(e){var b=e.target.closest('button');if(b)sh(b.dataset.p)});sh('e');addEventListener('resize',function(){var o=q('#sea-tabs .on');if(o)sh(o.dataset.p)});return true}
+var n=0;(function t(){if(!go()&&++n<80)setTimeout(t,250)})();
+})();
