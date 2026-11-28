@@ -1283,7 +1283,7 @@ var HHTML='<div class="seea-hg"><div class="m"><b>Beginner Series</b>4 saisons Â
 '<div class="seea-hv"><iframe src="'+TRL+'" allow="autoplay; fullscreen; picture-in-picture" title="Bande-annonce Beginner Series"></iframe></div></div>';
 function home(){if(!document.body.classList.contains('home'))return;var hero=document.querySelector('#sed-root .sen-hero'),hi=hero&&hero.querySelector('.sen-hi');if(!hi)return;
 if(!document.getElementById('seea-hcss')){var s=document.createElement('style');s.id='seea-hcss';s.textContent=HCSS;document.head.appendChild(s)}
-if(!hi.classList.contains('seea-h')){hi.className='sen-hi seea-h';hi.innerHTML=HHTML;hero.classList.add('seea-on')}
+if(!hi.querySelector('.seea-hg')){hi.className='sen-hi seea-h';hi.innerHTML=HHTML;hero.classList.add('seea-on')}
 var mn=document.querySelector('#sed-root .sen-main'),sa=document.getElementById('sen-saisons');if(mn&&sa&&mn.firstElementChild!==sa)mn.insertBefore(sa,mn.firstElementChild)}
 var hob=null;function homeWatch(){home();if(hob||!document.body.classList.contains('home'))return;hob=new MutationObserver(function(){hob.disconnect();home();hob.observe(document.body,{childList:true,subtree:true})});hob.observe(document.body,{childList:true,subtree:true});setTimeout(function(){if(hob)hob.disconnect()},30000)}
 function go(){if(!state().done)return false;homeWatch();if(!document.getElementById('seea-css')){var st=document.createElement('style');st.id='seea-css';st.textContent=CSS;document.head.appendChild(st)}
